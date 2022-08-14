@@ -930,10 +930,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   runningThreshold: 0
   turnSpeed: 0.2
-  isTouchingGround: 0
-  myRigidbody: {fileID: 0}
-  jumpForce: 1000
-  runningSpeed: 10
+  jumpForce: 20
+  gravityFallMultiplier: 3
+  maxFallSpeed: 50
+  airControl: 0.202
+  coyoteDuration: 2
+  jumpBufferDuration: 2
   width: 1
   height: 2
 --- !u!1001 &867518765

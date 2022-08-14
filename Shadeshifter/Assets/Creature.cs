@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Creature : MonoBehaviour
 {
@@ -32,15 +33,33 @@ public class Creature : MonoBehaviour
     MovementStatus currentMovementStatus = MovementStatus.still;
 
 
+    [Header("Jumping Parameters")]
 
-
-    [SerializeField]
-    bool isTouchingGround;
-    [SerializeField]
-    Rigidbody2D myRigidbody;
-    
     public float jumpForce;
-    public float runningSpeed;
+
+    float originalGravityScale = 3;
+    public float gravityFallMultiplier;
+
+    public float maxFallSpeed;
+
+    [Range(0, 1)]
+    public float airControl;
+    float currentAirControl = 1;
+
+    float coyoteTimer = 0;
+    public float coyoteDuration;
+
+    bool jumpInJumpBuffer = false;
+    float jumpBufferTimer = 0;
+    public float jumpBufferDuration;
+
+    bool jumped = false;
+
+    
+    bool isTouchingGround;
+
+    Rigidbody2D myRigidbody;
+        
     public float width;
     public float height;
 
@@ -49,8 +68,10 @@ public class Creature : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         myRigidbody = GetComponent<Rigidbody2D>();
         groundLayer = LayerMask.GetMask("Platforms");
+        originalGravityScale = myRigidbody.gravityScale;
     }
 
     // Update is called once per frame
@@ -65,7 +86,15 @@ public class Creature : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        /*if (myRigidbody.velocity.y <= 0 && !isTouchingGround)
+        {
+            myRigidbody.gravityScale = originalGravityScale * gravityFallMultiplier;
+        }*/
+       // Debug.Log(myRigidbody.velocity.y);
+        if (myRigidbody.velocity.y <= -maxFallSpeed)
+        {
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, -maxFallSpeed);
+        }
     }
 
     void GroundDetection()
@@ -79,11 +108,31 @@ public class Creature : MonoBehaviour
         //If either ray hit the ground, the player is on the ground
         if (leftCheck || rightCheck)
         {
+
+            
+
             isTouchingGround = true;
+            myRigidbody.gravityScale = originalGravityScale;
+            jumped = false;
+            currentAirControl = 1;
+            if (jumpInJumpBuffer && jumpBufferTimer < jumpBufferDuration)
+            {
+                jumpInJumpBuffer = false;
+                Jump();
+            }
+            
         }
         else
         {
+            if (isTouchingGround == true)
+            {
+                coyoteTimer = 0;
+            }
+            currentAirControl = airControl;
+            jumpBufferTimer += Time.deltaTime;
+            coyoteTimer += Time.deltaTime;
             isTouchingGround = false;
+            myRigidbody.gravityScale = originalGravityScale * gravityFallMultiplier;
         }
             
     }
@@ -126,7 +175,7 @@ public class Creature : MonoBehaviour
     {
         accelTimer += Time.deltaTime;
 
-        currentSpeed = horizontalMovement * accelerationCurve.Evaluate(Mathf.Clamp(accelTimer / accelerationTime, 0, 1)) * maxSpeed;
+        currentSpeed = horizontalMovement * accelerationCurve.Evaluate(Mathf.Clamp(accelTimer / accelerationTime, 0, 1)) * maxSpeed  /* *currentAirControl */;
 
         if (Mathf.Abs(currentSpeed) > maxSpeed)
         {
@@ -149,7 +198,7 @@ public class Creature : MonoBehaviour
     {
         decelTimer += Time.deltaTime;
 
-        currentSpeed = maxSpeed * accelerationCurve.Evaluate(Mathf.Clamp(decelTimer / decelerationTime, 0, 1));
+        currentSpeed = maxSpeed * accelerationCurve.Evaluate(Mathf.Clamp(decelTimer / decelerationTime, 0, 1)) /* * currentAirControl*/;
 
         if (currentSpeed == 0)
         {
@@ -173,9 +222,27 @@ public class Creature : MonoBehaviour
     {
         if (isTouchingGround)
         {
-            isTouchingGround = false;
-            myRigidbody.AddForce(new Vector2(0f, jumpForce));
+            Jump();
         }
+        else if (coyoteTimer < coyoteDuration && jumped == false)
+        {
+            myRigidbody.gravityScale = originalGravityScale;
+            Jump();
+        }
+        else
+        {
+            jumpInJumpBuffer = true;
+            jumpBufferTimer = 0;
+        }
+    }
+
+    void Jump()
+    {
+        currentAirControl = airControl;
+        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0f);
+        isTouchingGround = false;
+        myRigidbody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        jumped = true;
     }
 
     void CheckForDirectionalChanges(float horizontalMovement)

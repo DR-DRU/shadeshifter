@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -44,7 +45,8 @@ public class PlayerInput : MonoBehaviour
 
     void ReceiveInputs()
     {
+        
         horizontalMovement = Input.GetAxisRaw("Horizontal");
-        jump = Input.GetButton("Jump");
+        jump = jump || Input.GetButtonDown("Jump");
     }
 }
