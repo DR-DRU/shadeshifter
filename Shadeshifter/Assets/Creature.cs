@@ -54,8 +54,7 @@ public class Creature : MonoBehaviour
     public float jumpBufferDuration;
 
     bool jumped = false;
-
-    
+  
     bool isTouchingGround;
 
     Rigidbody2D myRigidbody;
@@ -64,6 +63,15 @@ public class Creature : MonoBehaviour
     public float height;
 
     LayerMask groundLayer;
+
+    [Header("Game Feel Parameters")]
+
+    public float landVibrationFrequencyL = 0;
+    public float landVibrationFrequencyH = 0;
+    public float landVibrationDuration = 0;
+    float landVibrationTimer = 200;
+    bool needForVibration = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -80,6 +88,11 @@ public class Creature : MonoBehaviour
         if (myRigidbody.velocity.y <= 0)
         {
             GroundDetection();
+        }
+        landVibrationTimer += Time.deltaTime;
+        if(landVibrationTimer >= landVibrationDuration)
+        {
+            Gamepad.current.ResetHaptics();
         }
         
     }
@@ -108,8 +121,12 @@ public class Creature : MonoBehaviour
         //If either ray hit the ground, the player is on the ground
         if (leftCheck || rightCheck)
         {
-
-            
+            if (isTouchingGround == false)
+            {
+                landVibrationTimer = 0;
+                Gamepad.current.SetMotorSpeeds(landVibrationFrequencyL, landVibrationFrequencyH);
+            }
+         
 
             isTouchingGround = true;
             myRigidbody.gravityScale = originalGravityScale;
