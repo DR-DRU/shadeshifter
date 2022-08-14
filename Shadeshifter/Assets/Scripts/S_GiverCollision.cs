@@ -5,11 +5,11 @@ using UnityEngine;
 public class S_GiverCollision : MonoBehaviour
 {
 
-    private S_Reward rewardScript;
+    private S_HealthManager healthManager;
     // Start is called before the first frame update
     void Start()
     {
-         rewardScript = this.transform.GetComponent<S_Reward>();
+         healthManager = this.transform.GetComponent<S_HealthManager>();
     }
 
     // Update is called once per frame
@@ -20,6 +20,6 @@ public class S_GiverCollision : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        rewardScript.GenerateRewards();
+        healthManager.DealDamage(1f);
     }
 }

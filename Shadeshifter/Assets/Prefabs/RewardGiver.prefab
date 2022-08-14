@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7303491818229443835}
   - component: {fileID: 7303491818229443834}
   - component: {fileID: 7303491818229443832}
-  - component: {fileID: 7303491818229443830}
-  - component: {fileID: 7303491818229443833}
   - component: {fileID: 7303491818229443831}
+  - component: {fileID: 7303491818229443830}
+  - component: {fileID: 4581983302276679762}
+  - component: {fileID: 7303491818229443833}
   m_Layer: 10
   m_Name: RewardGiver
   m_TagString: Untagged
@@ -114,38 +115,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.9892802, y: 3.3450966}
   m_EdgeRadius: 0
---- !u!114 &7303491818229443830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7303491818229443836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b637791d804ea4848a25c056b227a3c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7303491818229443833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7303491818229443836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e58617fb89464ee4f9aa0b0d31e6743d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 7303491818229443835}
-  spawnRange: 1.2
-  rewards:
-  - rewardPrefab: {fileID: 2228932459421826807, guid: c7dc1001f5409ec45be09c4956ec9962, type: 3}
-    spawnChance: 0.5
-    minQuantity: 1
-    maxQuantity: 9
-    endGeneration: 0
 --- !u!50 &7303491818229443831
 Rigidbody2D:
   serializedVersion: 4
@@ -167,3 +136,49 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7303491818229443830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7303491818229443836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b637791d804ea4848a25c056b227a3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4581983302276679762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7303491818229443836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d1f6aab01a57d4d82a9b5c9b90790a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  giveRewardOnDeath: 1
+--- !u!114 &7303491818229443833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7303491818229443836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58617fb89464ee4f9aa0b0d31e6743d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 7303491818229443835}
+  spawnRange: 1.2
+  rewards:
+  - rewardPrefab: {fileID: 2228932459421826807, guid: c7dc1001f5409ec45be09c4956ec9962, type: 3}
+    spawnChance: 1
+    minQuantity: 2
+    maxQuantity: 2
+    endGeneration: 0
