@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,7 +43,9 @@ public class Creature : MonoBehaviour
 
     public float maxFallSpeed = 60;
 
-    public float airControl;
+
+    [Range(0, 2)]
+    public float airControl = 1;
     float currentAirControl = 1;
 
     float coyoteTimer = 0;
@@ -88,7 +91,6 @@ public class Creature : MonoBehaviour
             GroundDetection();
         }
 
-
         landVibrationTimer += Time.deltaTime;
         if(landVibrationTimer >= landVibrationDuration)
         {
@@ -98,16 +100,10 @@ public class Creature : MonoBehaviour
             }
             
         }
-        
     }
 
     private void FixedUpdate()
     {
-        /*if (myRigidbody.velocity.y <= 0 && !isTouchingGround)
-        {
-            myRigidbody.gravityScale = originalGravityScale * gravityFallMultiplier;
-        }*/
-       // Debug.Log(myRigidbody.velocity.y);
         if (myRigidbody.velocity.y <= -maxFallSpeed)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, -maxFallSpeed);
@@ -132,7 +128,9 @@ public class Creature : MonoBehaviour
                 {
                     Gamepad.current.SetMotorSpeeds(landVibrationFrequencyL, landVibrationFrequencyH);
                 }
-                
+
+
+                accelTimer = Mathf.Clamp((Mathf.Abs(currentSpeed) / maxSpeed),0,1)* accelerationTime;
             }        
 
             isTouchingGround = true;
@@ -171,12 +169,18 @@ public class Creature : MonoBehaviour
 
     public void ProcessInputs(float horizontalMovement, bool jump)
     {
-        if(horizontalMovement!= 0f)ProcessHorizontalInput(horizontalMovement);
+        ProcessHorizontalInput(horizontalMovement);
         if(jump)ProcessJumpInput(jump);
     }
 
     void ProcessHorizontalInput(float horizontalMovement)
     {
+        if (!isTouchingGround)
+        {
+            InAirMovement(horizontalMovement);
+            return;
+        }
+
         CheckForDirectionalChanges(horizontalMovement);
 
 
@@ -193,6 +197,35 @@ public class Creature : MonoBehaviour
             case MovementStatus.atMax:
                 MaxSpeedMovement(horizontalMovement);
                 break;
+        }
+    }
+
+    void InAirMovement(float horizontalMovement)
+    {
+        
+
+
+        currentSpeed += horizontalMovement * airControl;
+        myRigidbody.velocity = new Vector2(currentSpeed, myRigidbody.velocity.y);
+
+        if (Mathf.Abs(currentSpeed) > maxSpeed)
+        {
+            if (currentSpeed > 0)
+            {
+                currentSpeed = maxSpeed;
+            }
+            else
+            {
+                currentSpeed = -maxSpeed;
+            }
+        }
+        if (currentSpeed > 0)
+        {
+            currentDirection = Direction.right;
+        }
+        else
+        {
+            currentDirection = Direction.left;
         }
     }
 
@@ -223,7 +256,7 @@ public class Creature : MonoBehaviour
     {
         decelTimer += Time.deltaTime;
 
-        currentSpeed = maxSpeed * accelerationCurve.Evaluate(Mathf.Clamp(decelTimer / decelerationTime, 0, 1)) /* * currentAirControl*/;
+        currentSpeed = currentSpeed * decelerationCurve.Evaluate(Mathf.Clamp(decelTimer / decelerationTime, 0, 1));
 
         if (currentSpeed == 0)
         {
@@ -288,7 +321,7 @@ public class Creature : MonoBehaviour
             {
                 case Direction.standing:
                     
-                    currentMovementStatus = MovementStatus.decelerating;
+                    currentMovementStatus = MovementStatus.decelerating;                    
                     break;
                 case Direction.left:
                 case Direction.right:
@@ -305,10 +338,10 @@ public class Creature : MonoBehaviour
         Direction newDirection = Direction.standing;
         switch (horizontalMovement)
         {
-            case < 0.0f:
+            case < -0.1f:
                 newDirection = Direction.left;
                 break;
-            case > 0.0f:
+            case > 0.1f:
                 newDirection = Direction.right;
                 break;
         }
