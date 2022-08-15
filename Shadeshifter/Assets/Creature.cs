@@ -10,18 +10,18 @@ public class Creature : MonoBehaviour
     enum MovementStatus { still, accelerating, decelerating, atMax};
 
     [Header("Movement Parameters")]
-    public float maxSpeed;
+    public float maxSpeed = 20;
 
-    public float accelerationTime;   
-    public float decelerationTime;
+    public float accelerationTime = 0.5f;   
+    public float decelerationTime = 0.5f;
 
     public AnimationCurve accelerationCurve;
     public AnimationCurve decelerationCurve;
 
-    public float runningThreshold;
+    public float runningThreshold = 5;
 
     [Range(0,1)]
-    public float turnSpeed;
+    public float turnSpeed = 0.3f;
 
     float currentSpeed;
 
@@ -35,23 +35,22 @@ public class Creature : MonoBehaviour
 
     [Header("Jumping Parameters")]
 
-    public float jumpForce;
+    public float jumpForce = 20;
 
     float originalGravityScale = 3;
-    public float gravityFallMultiplier;
+    public float downwardsGravityScale = 9;
 
-    public float maxFallSpeed;
+    public float maxFallSpeed = 60;
 
-    [Range(0, 1)]
     public float airControl;
     float currentAirControl = 1;
 
     float coyoteTimer = 0;
-    public float coyoteDuration;
+    public float coyoteDuration = 0.5f;
 
     bool jumpInJumpBuffer = false;
     float jumpBufferTimer = 0;
-    public float jumpBufferDuration;
+    public float jumpBufferDuration = 0.5f;
 
     bool jumped = false;
   
@@ -59,18 +58,17 @@ public class Creature : MonoBehaviour
 
     Rigidbody2D myRigidbody;
         
-    public float width;
-    public float height;
+    public float width = 1;
+    public float height = 2;
 
     LayerMask groundLayer;
 
     [Header("Game Feel Parameters")]
 
-    public float landVibrationFrequencyL = 0;
-    public float landVibrationFrequencyH = 0;
-    public float landVibrationDuration = 0;
+    public float landVibrationFrequencyL = 10;
+    public float landVibrationFrequencyH = 50;
+    public float landVibrationDuration = 0.2f;
     float landVibrationTimer = 200;
-    bool needForVibration = false;
 
 
     // Start is called before the first frame update
@@ -89,10 +87,16 @@ public class Creature : MonoBehaviour
         {
             GroundDetection();
         }
+
+
         landVibrationTimer += Time.deltaTime;
         if(landVibrationTimer >= landVibrationDuration)
         {
-            Gamepad.current.ResetHaptics();
+            if (Gamepad.current != null)
+            {
+                Gamepad.current.ResetHaptics();
+            }
+            
         }
         
     }
@@ -124,14 +128,21 @@ public class Creature : MonoBehaviour
             if (isTouchingGround == false)
             {
                 landVibrationTimer = 0;
-                Gamepad.current.SetMotorSpeeds(landVibrationFrequencyL, landVibrationFrequencyH);
-            }
-         
+                if (Gamepad.current != null)
+                {
+                    Gamepad.current.SetMotorSpeeds(landVibrationFrequencyL, landVibrationFrequencyH);
+                }
+                
+            }        
 
             isTouchingGround = true;
+
             myRigidbody.gravityScale = originalGravityScale;
+
             jumped = false;
+
             currentAirControl = 1;
+
             if (jumpInJumpBuffer && jumpBufferTimer < jumpBufferDuration)
             {
                 jumpInJumpBuffer = false;
@@ -145,11 +156,15 @@ public class Creature : MonoBehaviour
             {
                 coyoteTimer = 0;
             }
+
             currentAirControl = airControl;
+
             jumpBufferTimer += Time.deltaTime;
             coyoteTimer += Time.deltaTime;
+
             isTouchingGround = false;
-            myRigidbody.gravityScale = originalGravityScale * gravityFallMultiplier;
+
+            myRigidbody.gravityScale = downwardsGravityScale;
         }
             
     }
@@ -179,13 +194,6 @@ public class Creature : MonoBehaviour
                 MaxSpeedMovement(horizontalMovement);
                 break;
         }
-
-
-
-
-
-
-        //transform.position += new Vector3(horizontalMovement * runningSpeed, 0, 0) * Time.deltaTime;
     }
 
     void Accelerate(float horizontalMovement)
@@ -256,9 +264,12 @@ public class Creature : MonoBehaviour
     void Jump()
     {
         currentAirControl = airControl;
-        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0f);
+        
         isTouchingGround = false;
+
+        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0f);
         myRigidbody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+
         jumped = true;
     }
 
