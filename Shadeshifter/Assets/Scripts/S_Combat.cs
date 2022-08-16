@@ -7,14 +7,20 @@ public class S_Combat : MonoBehaviour
     [System.Serializable]
     public class Attack
     {
+        [Header("General")]
         public string name;
-        public AttackTypes Type;
+        public AttackTypes type;
         public float damage;
-        public float timeBetweenAttacs;
-        public Transform Center;
-        public Vector2 Extent;
-        public GameObject ProjectilePrefab;
-        public float ProjectileSpeed;
+        public float cooldown;
+        public Transform center;
+
+        [Header("Melee")]
+        public Vector2 extent;
+
+        [Header("Ranged")]
+        public GameObject prefab;
+        public float speed;
+        public float gravity;
 
         public enum AttackTypes
         {
@@ -55,25 +61,25 @@ public class S_Combat : MonoBehaviour
             Attack attackToPerform;
             attackToPerform = attacks[attackIndex];
 
-            attackTimers[attackIndex] = attackToPerform.timeBetweenAttacs;
+            attackTimers[attackIndex] = attackToPerform.cooldown;
 
             //Debug.Log("Performed attack: " + attackToPerform.name);
 
-            switch (attackToPerform.Type)
+            switch (attackToPerform.type)
             {
                 case Attack.AttackTypes.Melee:
                     {
                         //Debug.Log("Perform melee attack.");
 
-                        if (attackToPerform.Center == null)
+                        if (attackToPerform.center == null)
                         {
                             Debug.Log("No attack center selected for this attack.");
                             return;
                         }
 
-                        Vector2 attackCenter = new Vector2(attackToPerform.Center.position.x, attackToPerform.Center.position.y);
+                        Vector2 attackCenter = new Vector2(attackToPerform.center.position.x, attackToPerform.center.position.y);
 
-                        Collider2D[] attackHits = Physics2D.OverlapBoxAll(attackCenter, attackToPerform.Extent, 0f, LayerMask.GetMask("HitBoxes"));
+                        Collider2D[] attackHits = Physics2D.OverlapBoxAll(attackCenter, attackToPerform.extent, 0f, LayerMask.GetMask("HitBoxes"));
 
                         foreach (Collider2D hit in attackHits)
                         {
@@ -98,20 +104,23 @@ public class S_Combat : MonoBehaviour
                     {
                         Debug.Log("Perform ranged attack.");
 
-                        if (attackToPerform.ProjectilePrefab == null)
+                        if (attackToPerform.prefab == null)
                         {
                             Debug.Log("No projectile prefab selected for this attack.");
                             return;
                         }
 
-                        if (attackToPerform.Center == null)
+                        if (attackToPerform.center == null)
                         {
                             Debug.Log("No attack center selected for this attack.");
                             return;
                         }
 
-                        GameObject projectile = Instantiate(attackToPerform.ProjectilePrefab, attackToPerform.Center);
-                        projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.ProjectileSpeed, transform.right, this, attackIndex);
+                        GameObject projectile = Instantiate(attackToPerform.prefab, attackToPerform.center);
+
+                        Vector3 direction =  new Vector3(attackToPerform.center.position.x - transform.position.x, 0f, 0f);
+
+                        projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.speed, attackToPerform.gravity, direction, this, attackIndex);
 
 
                         break;
@@ -163,8 +172,7 @@ public class S_Combat : MonoBehaviour
         {
             PerformAttack(1);
             yield return new WaitForSeconds(2f);
-        }
-        
+        }      
        
     }
 
@@ -179,21 +187,21 @@ public class S_Combat : MonoBehaviour
 
         foreach (Attack a in attacks)
         {
-            if (a.Type == Attack.AttackTypes.Melee)
+            if (a.type == Attack.AttackTypes.Melee)
             {
-                if (a.Center != null)
+                if (a.center != null)
                 {
-                    Vector3 drawExtent = new Vector3(a.Extent.x, a.Extent.y, 1);
-                    Gizmos.DrawWireCube(a.Center.position, drawExtent);
+                    Vector3 drawExtent = new Vector3(a.extent.x, a.extent.y, 1);
+                    Gizmos.DrawWireCube(a.center.position, drawExtent);
                 }
 
             }
 
-            else if (a.Type == Attack.AttackTypes.Ranged)
+            else if (a.type == Attack.AttackTypes.Ranged)
             {
-                if (a.Center != null)
+                if (a.center != null)
                 {
-                    Gizmos.DrawWireSphere(a.Center.position, 0.3f);
+                    Gizmos.DrawWireSphere(a.center.position, 0.3f);
                 }
 
             }

@@ -5,19 +5,29 @@ using UnityEngine;
 public class S_Projectile : MonoBehaviour
 {
     // Start is called before the first frame update
+    public float maxTravelDistance = 5f;
+    
     private float speed;
     private Vector3 direction;
     private S_Combat combatScript;
     private int attackIndex;
 
     private bool initiated = false;
+    private Vector3 startPosition;
+    private Rigidbody2D rigidBodyRef;
 
-    public void InitializeProjectile(float projectileSpeed, Vector3 projectileDirection, S_Combat script, int index)
+    public void InitializeProjectile(float projectileSpeed, float projectileGravity, Vector3 projectileDirection, S_Combat script, int index)
     {
         speed = projectileSpeed;
         direction = projectileDirection;
         combatScript = script;
         attackIndex = index;
+     
+        startPosition = transform.position;
+        StartCoroutine(DistanceCheck());
+
+        rigidBodyRef = GetComponent<Rigidbody2D>();
+        rigidBodyRef.gravityScale = projectileGravity;
 
         initiated = true;
     }
@@ -66,5 +76,21 @@ public class S_Projectile : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    IEnumerator DistanceCheck()
+    {
+
+        while (true)
+        {
+            if (Vector3.Distance(transform.position, startPosition) >= maxTravelDistance)
+            {
+                Destroy(gameObject);
+            }
+
+            yield return new WaitForSeconds(0.4f);
+        }
+
+
     }
 }
