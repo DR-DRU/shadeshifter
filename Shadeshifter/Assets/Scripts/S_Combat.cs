@@ -13,6 +13,8 @@ public class S_Combat : MonoBehaviour
         public float timeBetweenAttacs;
         public Transform Center;
         public Vector2 Extent;
+        public GameObject ProjectilePrefab;
+        public float ProjectileSpeed;
 
         public enum AttackTypes
         {
@@ -21,32 +23,53 @@ public class S_Combat : MonoBehaviour
         }
     }
 
-    public Attack[] attacks;  
+    public Attack[] attacks;
+    private float[] attackTimers;
 
     void Start()
     {
-        PerformAttack(0);
+        attackTimers = new float[attacks.Length];
+        Debug.Log(attackTimers.Length);
+
+        StartCoroutine(testAttack());
     }
 
     void Update()
     {
-        
+        for (int i = 0; i < attackTimers.Length; i++)
+        {
+            attackTimers[i] = Mathf.Max(0f, (attackTimers[i] - Time.deltaTime));
+        }
     }
 
     void PerformAttack(int attackIndex)
     {
         if (attackIndex < attacks.Length)
         {
+            if (!canPerformAttack(attackIndex))
+            {
+                Debug.Log("Attack currently on cooldown.");
+                return;
+            }
+            
             Attack attackToPerform;
             attackToPerform = attacks[attackIndex];
 
-            Debug.Log("Performed attack: " + attackToPerform.name);
+            attackTimers[attackIndex] = attackToPerform.timeBetweenAttacs;
+
+            //Debug.Log("Performed attack: " + attackToPerform.name);
 
             switch (attackToPerform.Type)
             {
                 case Attack.AttackTypes.Melee:
                     {
-                        Debug.Log("Perform melee attack.");
+                        //Debug.Log("Perform melee attack.");
+
+                        if (attackToPerform.Center == null)
+                        {
+                            Debug.Log("No attack center selected for this attack.");
+                            return;
+                        }
 
                         Vector2 attackCenter = new Vector2(attackToPerform.Center.position.x, attackToPerform.Center.position.y);
 
@@ -54,13 +77,18 @@ public class S_Combat : MonoBehaviour
 
                         foreach (Collider2D hit in attackHits)
                         {
-                            if (selfCollision(hit))
+                            if (SelfCollision(hit))
                             {
                                 Debug.Log("Hit myself - " + this.gameObject.name);
                                 continue;
                             }
                      
                             Debug.Log("Hit something: " + hit.transform.parent.name + " (" + gameObject.name + ")");
+
+                            if (hit.transform.GetComponentInParent<S_HealthManager>() != null)
+                            {
+                                HitEnemy(hit.transform.GetComponentInParent<S_HealthManager>(), attackIndex);
+                            }
                         }
                         
                         break;
@@ -69,6 +97,23 @@ public class S_Combat : MonoBehaviour
                 case Attack.AttackTypes.Ranged:
                     {
                         Debug.Log("Perform ranged attack.");
+
+                        if (attackToPerform.ProjectilePrefab == null)
+                        {
+                            Debug.Log("No projectile prefab selected for this attack.");
+                            return;
+                        }
+
+                        if (attackToPerform.Center == null)
+                        {
+                            Debug.Log("No attack center selected for this attack.");
+                            return;
+                        }
+
+                        GameObject projectile = Instantiate(attackToPerform.ProjectilePrefab, attackToPerform.Center);
+                        projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.ProjectileSpeed, transform.right, this, attackIndex);
+
+
                         break;
                     }
 
@@ -83,7 +128,12 @@ public class S_Combat : MonoBehaviour
         
      }
 
-    private bool selfCollision (Collider2D hit)
+    public void HitEnemy(S_HealthManager enemyHealth, int attackIndex)
+    {
+        enemyHealth.DealDamage(attacks[attackIndex].damage);
+    }
+
+    private bool SelfCollision (Collider2D hit)
     {
         if (hit.transform.parent != null)
         {
@@ -94,6 +144,28 @@ public class S_Combat : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public bool canPerformAttack (int attackIndex)
+    {
+        if (attackIndex < attacks.Length)
+        {
+            return attackTimers[attackIndex] <= 0f;
+        }
+        
+        return false;
+    }
+
+    IEnumerator testAttack()
+    {
+        
+        while (true)
+        {
+            PerformAttack(1);
+            yield return new WaitForSeconds(2f);
+        }
+        
+       
     }
 
 
@@ -113,6 +185,15 @@ public class S_Combat : MonoBehaviour
                 {
                     Vector3 drawExtent = new Vector3(a.Extent.x, a.Extent.y, 1);
                     Gizmos.DrawWireCube(a.Center.position, drawExtent);
+                }
+
+            }
+
+            else if (a.Type == Attack.AttackTypes.Ranged)
+            {
+                if (a.Center != null)
+                {
+                    Gizmos.DrawWireSphere(a.Center.position, 0.3f);
                 }
 
             }

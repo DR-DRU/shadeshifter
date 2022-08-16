@@ -42,8 +42,8 @@ GameObject:
   - component: {fileID: 7303491818229443835}
   - component: {fileID: 7303491818229443834}
   - component: {fileID: 7303491818229443830}
-  - component: {fileID: 2455897557026423958}
   - component: {fileID: 4581983302276679762}
+  - component: {fileID: 2455897557026423958}
   - component: {fileID: 7303491818229443833}
   m_Layer: 0
   m_Name: RewardGiver
@@ -133,6 +133,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b637791d804ea4848a25c056b227a3c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4581983302276679762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7303491818229443836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d1f6aab01a57d4d82a9b5c9b90790a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  giveRewardOnDeath: 1
 --- !u!114 &2455897557026423958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,20 +166,6 @@ MonoBehaviour:
     timeBetweenAttacs: 1
     Center: {fileID: 105249883}
     Extent: {x: 1.07, y: 1.29}
---- !u!114 &4581983302276679762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7303491818229443836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d1f6aab01a57d4d82a9b5c9b90790a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 4
-  giveRewardOnDeath: 1
 --- !u!114 &7303491818229443833
 MonoBehaviour:
   m_ObjectHideFlags: 0

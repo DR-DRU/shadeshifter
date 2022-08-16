@@ -12,9 +12,15 @@ public class S_HealthManager : MonoBehaviour
     public bool giveRewardOnDeath;
     
     // Start is called before the first frame update
+    void Awake()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
+    }
+
     void Start()
     {
-        ResetHealth();
+        UpdateHealthVisualization();
     }
 
     public void RegenerateHealth(float amount)
