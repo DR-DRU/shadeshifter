@@ -48,7 +48,7 @@ public class S_Combat : MonoBehaviour
         }
     }
 
-    void PerformAttack(int attackIndex)
+    public void PerformAttack(int attackIndex)
     {
         if (attackIndex < attacks.Length)
         {
@@ -78,7 +78,8 @@ public class S_Combat : MonoBehaviour
                         }
 
                         Vector2 attackCenter = new Vector2(attackToPerform.center.position.x, attackToPerform.center.position.y);
-
+                        DrawRectangle2D(attackCenter, attackToPerform.extent, 1f);
+                        
                         Collider2D[] attackHits = Physics2D.OverlapBoxAll(attackCenter, attackToPerform.extent, 0f, LayerMask.GetMask("HitBoxes"));
 
                         foreach (Collider2D hit in attackHits)
@@ -137,6 +138,94 @@ public class S_Combat : MonoBehaviour
         
      }
 
+    public void PerformAttack(int attackIndex, Vector3 direction)
+    {
+        if (attackIndex < attacks.Length)
+        {
+            if (!canPerformAttack(attackIndex))
+            {
+                Debug.Log("Attack currently on cooldown.");
+                return;
+            }
+
+            Attack attackToPerform;
+            attackToPerform = attacks[attackIndex];
+
+            attackTimers[attackIndex] = attackToPerform.cooldown;
+
+            //Debug.Log("Performed attack: " + attackToPerform.name);
+
+            switch (attackToPerform.type)
+            {
+                case Attack.AttackTypes.Melee:
+                    {
+                        //Debug.Log("Perform melee attack.");
+
+                        if (attackToPerform.center == null)
+                        {
+                            Debug.Log("No attack center selected for this attack.");
+                            return;
+                        }
+
+                        Vector2 attackCenter = new Vector2(attackToPerform.center.position.x, attackToPerform.center.position.y);
+                        DrawRectangle2D(attackCenter, attackToPerform.extent, 1f);
+
+                        Collider2D[] attackHits = Physics2D.OverlapBoxAll(attackCenter, attackToPerform.extent, 0f, LayerMask.GetMask("HitBoxes"));
+
+                        foreach (Collider2D hit in attackHits)
+                        {
+                            if (SelfCollision(hit))
+                            {
+                                Debug.Log("Hit myself - " + this.gameObject.name);
+                                continue;
+                            }
+
+                            Debug.Log("Hit something: " + hit.transform.parent.name + " (" + gameObject.name + ")");
+
+                            if (hit.transform.GetComponentInParent<S_HealthManager>() != null)
+                            {
+                                HitEnemy(hit.transform.GetComponentInParent<S_HealthManager>(), attackIndex);
+                            }
+                        }
+
+                        break;
+                    }
+
+                case Attack.AttackTypes.Ranged:
+                    {
+                        Debug.Log("Perform ranged attack.");
+
+                        if (attackToPerform.prefab == null)
+                        {
+                            Debug.Log("No projectile prefab selected for this attack.");
+                            return;
+                        }
+
+                        if (attackToPerform.center == null)
+                        {
+                            Debug.Log("No attack center selected for this attack.");
+                            return;
+                        }
+
+                        GameObject projectile = Instantiate(attackToPerform.prefab, attackToPerform.center);                
+
+                        projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.speed, attackToPerform.gravity, direction, this, attackIndex);
+
+
+                        break;
+                    }
+
+            }
+        }
+
+        else
+        {
+            Debug.Log("This attack does not exist");
+            return;
+        }
+
+    }
+
     public void HitEnemy(S_HealthManager enemyHealth, int attackIndex)
     {
         enemyHealth.DealDamage(attacks[attackIndex].damage);
@@ -155,6 +244,26 @@ public class S_Combat : MonoBehaviour
         }
     }
 
+    private void DrawRectangle2D(Vector2 center, Vector2 extent, float duration)
+    {
+        Color rectColor = Color.cyan;
+
+        Vector3 upperLeft;
+        Vector3 lowerRight;
+        Vector3 upperRight;
+        Vector3 lowerLeft;
+
+        upperLeft = new Vector3(center.x - (extent.x / 2f), center.y + (extent.y / 2f), 0f);
+        upperRight = new Vector3(center.x + (extent.x / 2f), center.y + (extent.y / 2f), 0f);
+        lowerRight = new Vector3(center.x + (extent.x / 2f), center.y - (extent.y / 2f), 0f);
+        lowerLeft = new Vector3(center.x - (extent.x / 2f), center.y - (extent.y / 2f), 0f);
+
+        Debug.DrawLine(upperLeft, upperRight, rectColor, duration);
+        Debug.DrawLine(upperRight, lowerRight, rectColor, duration);
+        Debug.DrawLine(lowerRight, lowerLeft, rectColor, duration);
+        Debug.DrawLine(lowerLeft, upperLeft, rectColor, duration);
+    }
+
     public bool canPerformAttack (int attackIndex)
     {
         if (attackIndex < attacks.Length)
@@ -170,7 +279,7 @@ public class S_Combat : MonoBehaviour
         
         while (true)
         {
-            PerformAttack(1);
+            PerformAttack(0);
             yield return new WaitForSeconds(2f);
         }      
        
