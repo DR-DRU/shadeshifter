@@ -70,6 +70,8 @@ public class Creature : MonoBehaviour
 
     [Header("Game Feel Parameters")]
 
+
+    public GameObject landParticle;
     public float stretchFactor = 1.1f;
     public float stretchDuration = 0.5f;
     public float squashFactor = 0.9f;
@@ -223,7 +225,10 @@ public class Creature : MonoBehaviour
         transform.localScale = new Vector2(transform.localScale.x,squashFactor);
         squashTimer = 0;
         squashed = true;
-        
+
+
+        Instantiate(landParticle, transform.position - new Vector3(0, 0.88f, 0), transform.rotation);
+
     }
 
 
