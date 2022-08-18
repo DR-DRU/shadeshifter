@@ -21,9 +21,9 @@ public class Footsteps : MonoBehaviour
 
     [Range(0, 1)]
     public float alterationsToVolumeHigh;
-    
 
 
+    [SerializeField]
     private AudioSource audioSource;
 
     float originalPitch;
@@ -32,7 +32,7 @@ public class Footsteps : MonoBehaviour
 
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+       // audioSource = GetComponent<AudioSource>();
         originalPitch = audioSource.pitch;
         originalVolume = audioSource.volume;
     }

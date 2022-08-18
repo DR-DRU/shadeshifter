@@ -395,3 +395,4 @@ MonoBehaviour:
   alterationsToPitchHigh: 0.128
   alterationsToVolumeLow: -0.195
   alterationsToVolumeHigh: 0.122
+  audioSource: {fileID: 6702421729740008073}

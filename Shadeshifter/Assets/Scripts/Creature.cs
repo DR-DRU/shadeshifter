@@ -70,6 +70,9 @@ public class Creature : MonoBehaviour
 
     [Header("Game Feel Parameters")]
 
+    public AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip landSound;
     public float landVibrationFrequencyL = 10;
     public float landVibrationFrequencyH = 50;
     public float landVibrationDuration = 0.2f;
@@ -127,30 +130,8 @@ public class Creature : MonoBehaviour
         {
             if (isTouchingGround == false)
             {
-                landVibrationTimer = 0;
-                if (Gamepad.current != null)
-                {
-                    Gamepad.current.SetMotorSpeeds(landVibrationFrequencyL, landVibrationFrequencyH);
-                }
-
-
-                accelTimer = Mathf.Clamp((Mathf.Abs(currentSpeed) / maxSpeed),0,1)* accelerationTime;
-            }        
-
-            isTouchingGround = true;
-
-            myRigidbody.gravityScale = originalGravityScale;
-
-            jumped = false;
-
-            currentAirControl = 1;
-
-            if (jumpInJumpBuffer && jumpBufferTimer < jumpBufferDuration)
-            {
-                jumpInJumpBuffer = false;
-                Jump();
-            }
-            
+                Landing();
+            }                 
         }
         else
         {
@@ -170,6 +151,35 @@ public class Creature : MonoBehaviour
         }
             
     }
+
+    void Landing()
+    {
+        audioSource.PlayOneShot(landSound);
+
+        landVibrationTimer = 0;
+        if (Gamepad.current != null)
+        {
+            Gamepad.current.SetMotorSpeeds(landVibrationFrequencyL, landVibrationFrequencyH);
+        }
+
+
+        accelTimer = Mathf.Clamp((Mathf.Abs(currentSpeed) / maxSpeed), 0, 1) * accelerationTime;
+
+        isTouchingGround = true;
+
+        myRigidbody.gravityScale = originalGravityScale;
+
+        jumped = false;
+
+        currentAirControl = 1;
+
+        if (jumpInJumpBuffer && jumpBufferTimer < jumpBufferDuration)
+        {
+            jumpInJumpBuffer = false;
+            Jump();
+        }
+    }
+
 
     public void ProcessInputs(float horizontalMovement, bool jump)
     {
@@ -302,6 +312,8 @@ public class Creature : MonoBehaviour
 
     void Jump()
     {
+        audioSource.PlayOneShot(jumpSound);
+
         currentAirControl = airControl;
         
         isTouchingGround = false;
