@@ -70,6 +70,17 @@ public class Creature : MonoBehaviour
 
     [Header("Game Feel Parameters")]
 
+    public float stretchFactor = 1.1f;
+    public float stretchDuration = 0.5f;
+    public float squashFactor = 0.9f;
+    public float squashDuration = 0.5f;
+
+    float squashTimer = 0f;
+    float stretchTimer = 0f;
+    bool squashed = false;
+    bool stretched = true;
+
+
     public AudioSource audioSource;
     public AudioClip jumpSound;
     public AudioClip landSound;
@@ -105,6 +116,36 @@ public class Creature : MonoBehaviour
             }
             
         }
+        
+        if (squashed)
+        {
+            Debug.Log(squashTimer);
+            squashTimer += Time.deltaTime;
+            if (squashTimer >= squashDuration)
+            {
+                RevertYScale();
+                squashed = false;
+            }
+            
+        }
+
+        if (stretched)
+        {
+            stretchTimer += Time.deltaTime;
+            if (stretchTimer >= stretchDuration)
+            {
+                RevertYScale();
+                stretched = false;
+            }
+            
+        }
+
+
+    }
+
+    void RevertYScale()
+    {
+        transform.localScale = new Vector2(transform.localScale.x, 1);
     }
 
     private void FixedUpdate()
@@ -178,6 +219,11 @@ public class Creature : MonoBehaviour
             jumpInJumpBuffer = false;
             Jump();
         }
+
+        transform.localScale = new Vector2(transform.localScale.x,squashFactor);
+        squashTimer = 0;
+        squashed = true;
+        
     }
 
 
@@ -236,12 +282,12 @@ public class Creature : MonoBehaviour
         if (currentSpeed > 0)
         {
             currentDirection = Direction.right;
-            transform.localScale = new Vector2(1, 1);
+            transform.localScale = new Vector2(1, transform.localScale.y);
         }
         else
         {
             currentDirection = Direction.left;
-            transform.localScale = new Vector2(-1,1);
+            transform.localScale = new Vector2(-1,transform.localScale.y);
         }
     }
 
@@ -322,6 +368,10 @@ public class Creature : MonoBehaviour
         myRigidbody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
 
         jumped = true;
+
+        transform.localScale = new Vector2(transform.localScale.x, stretchFactor);
+        stretchTimer = 0;
+        stretched = true;
     }
 
     void CheckForDirectionalChanges(float horizontalMovement)
@@ -358,11 +408,11 @@ public class Creature : MonoBehaviour
         {
             case < -0.1f:
                 newDirection = Direction.left;
-                transform.localScale = new Vector2(-1, 1);
+                transform.localScale = new Vector2(-1, transform.localScale.y);
                 break;
             case > 0.1f:
                 newDirection = Direction.right;
-                transform.localScale = new Vector2(1, 1);
+                transform.localScale = new Vector2(1, transform.localScale.y);
                 break;
         }
 

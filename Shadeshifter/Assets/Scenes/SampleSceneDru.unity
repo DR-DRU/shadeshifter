@@ -1601,6 +1601,14 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 6702421729740008080}
+    - target: {fileID: 6702421729461238638, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
+      propertyPath: squashFactor
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702421729461238638, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
+      propertyPath: stretchFactor
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6702421729740008074, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
       propertyPath: clips.Array.size
       value: 1
