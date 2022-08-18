@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class Creature : MonoBehaviour
 {
+    Animator myAnimator;
+
     enum Direction { standing, left, right };
     enum MovementStatus { still, accelerating, decelerating, atMax};
 
@@ -77,7 +79,7 @@ public class Creature : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         groundLayer = LayerMask.GetMask("Platforms");
         originalGravityScale = myRigidbody.gravityScale;
@@ -108,14 +110,16 @@ public class Creature : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, -maxFallSpeed);
         }
+        myAnimator.SetFloat("Speed", Mathf.Abs(currentSpeed));
+        myAnimator.SetBool("OnGround", isTouchingGround);
     }
 
     void GroundDetection()
     {
       
 
-        RaycastHit2D leftCheck = Physics2D.Raycast(new Vector2(-width/2 + transform.position.x, transform.position.y), Vector2.down, 0.05f,groundLayer);
-        RaycastHit2D rightCheck = Physics2D.Raycast(new Vector2(width / 2 + transform.position.x, transform.position.y), Vector2.down, 0.05f,groundLayer);
+        RaycastHit2D leftCheck = Physics2D.Raycast(new Vector2(-width/2 + transform.position.x, transform.position.y), Vector2.down, 0.82f,groundLayer);
+        RaycastHit2D rightCheck = Physics2D.Raycast(new Vector2(width / 2 + transform.position.x, transform.position.y), Vector2.down, 0.82f,groundLayer);
        // Debug.DrawRay(new Vector2(-width / 2 + transform.position.x, transform.position.y), Vector2.down + new Vector2(0, -0.05f));
 
         //If either ray hit the ground, the player is on the ground
@@ -222,10 +226,12 @@ public class Creature : MonoBehaviour
         if (currentSpeed > 0)
         {
             currentDirection = Direction.right;
+            transform.localScale = new Vector2(1, 1);
         }
         else
         {
             currentDirection = Direction.left;
+            transform.localScale = new Vector2(-1,1);
         }
     }
 
@@ -340,9 +346,11 @@ public class Creature : MonoBehaviour
         {
             case < -0.1f:
                 newDirection = Direction.left;
+                transform.localScale = new Vector2(-1, 1);
                 break;
             case > 0.1f:
                 newDirection = Direction.right;
+                transform.localScale = new Vector2(1, 1);
                 break;
         }
 
