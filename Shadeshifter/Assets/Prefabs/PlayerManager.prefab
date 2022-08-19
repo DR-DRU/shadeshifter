@@ -258,17 +258,17 @@ MonoBehaviour:
   jumpBufferDuration: 2
   width: 1
   height: 2.77
-  landParticle: {fileID: 4792821426854617165, guid: cdc0bc61935966542b2e839353577d7c, type: 3}
-  stretchFactor: 1.5
-  stretchDuration: 0.5
+  landParticle: {fileID: 2875855374124964735, guid: 0d40e4185e917b34a8bd7f92065d7ede, type: 3}
+  stretchFactor: 1.3
+  stretchDuration: 0.1
   squashFactor: 0.5
-  squashDuration: 0.5
+  squashDuration: 0.2
   audioSource: {fileID: 6702421729740008080}
   jumpSound: {fileID: 8300000, guid: 1c0bcf48610f23d49985ac7e392de856, type: 3}
   landSound: {fileID: 8300000, guid: 1c0bcf48610f23d49985ac7e392de856, type: 3}
   landVibrationFrequencyL: 10
   landVibrationFrequencyH: 50
-  landVibrationDuration: 1
+  landVibrationDuration: 0.3
 --- !u!95 &1910384380890878332
 Animator:
   serializedVersion: 4
