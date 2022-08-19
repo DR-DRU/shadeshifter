@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2545075995625919633}
   - component: {fileID: 2545075995625919632}
   - component: {fileID: 2545075995625919635}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: P_CameraBoundaries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,20 +75,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 2545075995625919635}
     m_ColliderPaths:
-    - - X: 33252616
-        Y: 39844896
-      - X: -5000000
-        Y: 39844896
-      - X: -5000000
-        Y: -4999999
-      - X: 33252616
-        Y: -4999999
+    - - X: 302594208
+        Y: 83636456
+      - X: 33611908
+        Y: 83636456
+      - X: 33611908
+        Y: -40786656
+      - X: 302594208
+        Y: -40786656
   m_CompositePaths:
     m_Paths:
-    - - {x: 3.3252325, y: -0.4999999}
-      - {x: 3.3252325, y: 3.9844897}
-      - {x: -0.5, y: 3.9844604}
-      - {x: -0.4999707, y: -0.4999999}
+    - - {x: 30.259392, y: -4.0786657}
+      - {x: 30.259392, y: 8.363646}
+      - {x: 3.3611908, y: 8.363616}
+      - {x: 3.3612201, y: -4.0786657}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!61 &2545075995625919635
@@ -104,7 +104,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 1.4126308, y: 1.7422448}
+  m_Offset: {x: 16.810307, y: 2.14249}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -115,5 +115,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.8252616, y: 4.4844894}
+  m_Size: {x: 26.898232, y: 12.442311}
   m_EdgeRadius: 0
