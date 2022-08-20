@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 2.5
   m_Material: {fileID: 6200000, guid: 06d4d2aecb25ca744884ff0ba94d4d22, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -140,29 +140,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb0d1c429fda05428320a4d06f59565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 20
-  accelerationTime: 1
-  decelerationTime: 0.5
+  maxSpeed: 15
+  accelerationTime: 0.7
+  decelerationTime: 0.3
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
+      time: -0.003796314
+      value: 0.24883944
+      inSlope: 0.7483197
+      outSlope: 0.7483197
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 1
-      tangentMode: 34
+      inSlope: 0.22239368
+      outSlope: 0.22239368
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.14805011
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -180,8 +180,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.74750507
-      value: 0.59485936
+      time: 0.43895683
+      value: 0.26509005
       inSlope: -1.4871278
       outSlope: -1.4871278
       tangentMode: 0
@@ -201,26 +201,26 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   runningThreshold: 0
-  turnSpeed: 0.387
-  jumpForce: 20
-  downwardsGravityScale: 9
-  maxFallSpeed: 50
-  airControl: 0.664
-  coyoteDuration: 2
-  jumpBufferDuration: 2
+  turnSpeed: 0.3
+  jumpForce: 16
+  downwardsGravityScale: 10
+  maxFallSpeed: 30
+  airControl: 0.599
+  coyoteDuration: 0.12
+  jumpBufferDuration: 0.1
   width: 1
   height: 2.77
   landParticle: {fileID: 2875855374124964735, guid: 0d40e4185e917b34a8bd7f92065d7ede, type: 3}
-  stretchFactor: 1.3
-  stretchDuration: 0.1
+  stretchFactor: 1
+  stretchDuration: 0
   squashFactor: 0.5
   squashDuration: 0.2
   audioSource: {fileID: 4180567578669615972}
   jumpSound: {fileID: 8300000, guid: 6ee34b7250bc5b14b9286a9dfa28aa8f, type: 3}
   landSound: {fileID: 8300000, guid: bd6a8b805dea840469b8589b042edcdb, type: 3}
-  landVibrationFrequencyL: 10
-  landVibrationFrequencyH: 50
-  landVibrationDuration: 0.3
+  landVibrationFrequencyL: 0.4
+  landVibrationFrequencyH: 0.4
+  landVibrationDuration: 0.15
 --- !u!95 &9044522607674241160
 Animator:
   serializedVersion: 4
