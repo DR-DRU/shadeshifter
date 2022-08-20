@@ -264,8 +264,8 @@ MonoBehaviour:
   squashFactor: 0.5
   squashDuration: 0.2
   audioSource: {fileID: 6702421729740008080}
-  jumpSound: {fileID: 8300000, guid: 1c0bcf48610f23d49985ac7e392de856, type: 3}
-  landSound: {fileID: 8300000, guid: 1c0bcf48610f23d49985ac7e392de856, type: 3}
+  jumpSound: {fileID: 8300000, guid: 6ee34b7250bc5b14b9286a9dfa28aa8f, type: 3}
+  landSound: {fileID: 8300000, guid: bd6a8b805dea840469b8589b042edcdb, type: 3}
   landVibrationFrequencyL: 10
   landVibrationFrequencyH: 50
   landVibrationDuration: 0.3
@@ -308,7 +308,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -375,7 +375,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -398,11 +398,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 0dc1296ebd4725a4eb8ef459a564e2b9, type: 3}
-  alterationsToPitchLow: -0.27
-  alterationsToPitchHigh: 0.128
-  alterationsToVolumeLow: -0.195
-  alterationsToVolumeHigh: 0.122
+  - {fileID: 8300000, guid: 056f25cf2ef0acf4e856e76d977b1eb4, type: 3}
+  - {fileID: 8300000, guid: a107bc4fe90d4ab4f9ddfa5f02be25c5, type: 3}
+  - {fileID: 8300000, guid: f8fb4327ff9e1fe41ac2811028f8a67d, type: 3}
+  - {fileID: 8300000, guid: f7123303f84241f499af27160d76a46b, type: 3}
+  - {fileID: 8300000, guid: d751fe3a84928614a895e80ccedf1763, type: 3}
+  - {fileID: 8300000, guid: 774dd3fec13f3a14fbce4fd3e3250215, type: 3}
+  - {fileID: 8300000, guid: 5a0cbffd5cb7fda4f8df35c50e1c007a, type: 3}
+  - {fileID: 8300000, guid: 0f40119d6db5f1a46a4cb11ec8d1e1db, type: 3}
+  alterationsToPitchLow: -0.1
+  alterationsToPitchHigh: 0.1
+  alterationsToVolumeLow: -0.2
+  alterationsToVolumeHigh: 0.2
   audioSource: {fileID: 6702421729740008073}
 --- !u!82 &6702421729740008080
 AudioSource:
