@@ -6,11 +6,28 @@ using Cinemachine;
 public class S_CameraTransition : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    [Header("Transition to new camera")]
     [SerializeField]
     private CinemachineVirtualCamera newCamera;
 
     [SerializeField]
+    private bool overrideEnterTransition = false;
+    [SerializeField]
+    private float overrideEnterDuration = 1.0f;
+    [SerializeField]
+    private CinemachineBlendDefinition.Style overrideEnterStyle = CinemachineBlendDefinition.Style.EaseInOut;
+
+    [Header("Optional transition to previous camera")]
+    [SerializeField]
     private bool previousCameraOnLeave = true;
+
+    [SerializeField]
+    private bool overrideLeaveTransition = false;
+    [SerializeField]
+    private float overrideLeaveDuration = 1.0f;
+    [SerializeField]
+    private CinemachineBlendDefinition.Style overrideLeaveStyle = CinemachineBlendDefinition.Style.EaseInOut;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -48,7 +65,16 @@ public class S_CameraTransition : MonoBehaviour
     {
         Debug.Log("Player entered");
 
-        S_CameraManager.Instance.SwitchToCamera(newCamera);
+        if (overrideEnterTransition)
+        {
+            S_CameraManager.Instance.SwitchToCamera(newCamera, overrideEnterDuration, overrideEnterStyle);
+        }
+
+        else
+        {
+            S_CameraManager.Instance.SwitchToCamera(newCamera);
+        }
+     
     }
 
     private void OnPlayerExit()
@@ -56,8 +82,16 @@ public class S_CameraTransition : MonoBehaviour
         Debug.Log("Player left");
 
         if (previousCameraOnLeave)
-        {
-           S_CameraManager.Instance.SwitchToPreviosCamera();
+        {         
+            if (overrideLeaveTransition)
+            {
+                S_CameraManager.Instance.SwitchToPreviosCamera(overrideLeaveDuration, overrideLeaveStyle);
+            }
+
+            else
+            {
+                S_CameraManager.Instance.SwitchToPreviosCamera();
+            }           
         }
     }
 }

@@ -79,7 +79,7 @@ public class S_Combat : MonoBehaviour
 
                         Vector2 attackCenter = new Vector2(attackToPerform.center.position.x, attackToPerform.center.position.y);
                         DrawRectangle2D(attackCenter, attackToPerform.extent, 1f);
-                        S_CameraManager.Instance.ShakeCamera(0.1f);
+                        S_CameraManager.Instance.ShakeCamera(0.1f, 0.5f, Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, new Vector3(-1f, -1f, 0f));
                         
                         Collider2D[] attackHits = Physics2D.OverlapBoxAll(attackCenter, attackToPerform.extent, 0f, LayerMask.GetMask("HitBoxes"));
 

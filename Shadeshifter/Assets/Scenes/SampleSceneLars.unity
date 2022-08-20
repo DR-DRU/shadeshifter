@@ -1502,7 +1502,31 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1213932122080333719, guid: 2979bf04f98e67f4e8ef7a6d04e85bd4, type: 3}
+      propertyPath: overrideStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213932122080333719, guid: 2979bf04f98e67f4e8ef7a6d04e85bd4, type: 3}
+      propertyPath: overrideLeaveStyle
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213932122080333719, guid: 2979bf04f98e67f4e8ef7a6d04e85bd4, type: 3}
+      propertyPath: overrideLeaveDuration
+      value: 3.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213932122080333719, guid: 2979bf04f98e67f4e8ef7a6d04e85bd4, type: 3}
       propertyPath: previousCameraOnLeave
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213932122080333719, guid: 2979bf04f98e67f4e8ef7a6d04e85bd4, type: 3}
+      propertyPath: overrideEnterTransition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213932122080333719, guid: 2979bf04f98e67f4e8ef7a6d04e85bd4, type: 3}
+      propertyPath: overrideLeaveTransition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213932122080333719, guid: 2979bf04f98e67f4e8ef7a6d04e85bd4, type: 3}
+      propertyPath: overrideTransitionRules
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2553860396525417864, guid: 2979bf04f98e67f4e8ef7a6d04e85bd4, type: 3}
@@ -1652,6 +1676,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5669788345096855876, guid: 715c026a8a7d86a45b0ba23459385915, type: 3}
+      propertyPath: m_DefaultVelocity.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5669788345096855876, guid: 715c026a8a7d86a45b0ba23459385915, type: 3}
+      propertyPath: m_DefaultVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5669788345096855876, guid: 715c026a8a7d86a45b0ba23459385915, type: 3}
+      propertyPath: m_ImpulseDefinition.m_DissipationRate
+      value: 0.348
+      objectReference: {fileID: 0}
+    - target: {fileID: 5669788345096855877, guid: 715c026a8a7d86a45b0ba23459385915, type: 3}
+      propertyPath: cera.m_RawSignal
+      value: 
+      objectReference: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
+    - target: {fileID: 5669788345096855878, guid: 715c026a8a7d86a45b0ba23459385915, type: 3}
+      propertyPath: m_DefaultBlend.m_Time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5669788345096855878, guid: 715c026a8a7d86a45b0ba23459385915, type: 3}
+      propertyPath: m_DefaultBlend.m_Style
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5669788345096855879, guid: 715c026a8a7d86a45b0ba23459385915, type: 3}
       propertyPath: m_RootOrder
       value: 0
