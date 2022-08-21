@@ -45,8 +45,8 @@ public class Footsteps : MonoBehaviour
         AudioClip clip = GetRandomClip();
         audioSource.pitch += Random.Range(alterationsToPitchLow, alterationsToPitchHigh);
         audioSource.volume += Random.Range(alterationsToVolumeLow, alterationsToVolumeHigh);
-
-        audioSource.PlayOneShot(clip);
+        audioSource.clip = clip;
+        audioSource.Play();
 
 
         
