@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6702421728362603873}
   - component: {fileID: 6702421728362603872}
+  - component: {fileID: 770071347}
   m_Layer: 9
   m_Name: PlayerManager
   m_TagString: Player
@@ -48,6 +49,20 @@ MonoBehaviour:
   jump: 0
   horizontalMovement: 0
   posessedCreature: {fileID: 0}
+--- !u!114 &770071347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6702421728362603874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d1f6aab01a57d4d82a9b5c9b90790a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  giveRewardOnDeath: 0
 --- !u!1001 &6702421728792892637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55,9 +70,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6702421728362603873}
     m_Modifications:
+    - target: {fileID: 2305605486867356533, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4180567577920559767, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
       propertyPath: m_Name
       value: P_Slate
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180567577920559770, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
+      propertyPath: hangTime
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4180567577920559771, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
       propertyPath: m_RootOrder

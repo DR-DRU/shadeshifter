@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &682321103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 682321104}
+  m_Layer: 13
+  m_Name: AttackCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &682321104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682321103}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.761, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3085752317207497391}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3085752317207497376
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,6 +46,7 @@ GameObject:
   - component: {fileID: 3085752317207497388}
   - component: {fileID: 3085752317207497386}
   - component: {fileID: 3085752317207497387}
+  - component: {fileID: 1567619982}
   m_Layer: 13
   m_Name: Wooltooth
   m_TagString: Untagged
@@ -31,11 +63,12 @@ Transform:
   m_GameObject: {fileID: 3085752317207497376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 46.73, y: 6.17, z: 0}
-  m_LocalScale: {x: 3.4174578, y: 1.4266342, z: 1}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3085752317617128035}
   - {fileID: 8698697828402517984}
+  - {fileID: 682321104}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -107,6 +140,7 @@ MonoBehaviour:
   rightPatrolPoint: {x: 65.01, y: 6.1}
   waitDuration: 1
   patrolSpeed: 5
+  attackRange: 1
   chaseSpeed: 10
   chaseArea: {fileID: 0}
   resetDuration: 5
@@ -181,6 +215,28 @@ MonoBehaviour:
     minQuantity: 1
     maxQuantity: 2
     endGeneration: 0
+--- !u!114 &1567619982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3085752317207497376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045a51b126f4eab449e6590445ef2ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacks:
+  - name: Wooltooth_Melee
+    type: 0
+    damage: 1
+    cooldown: 0.5
+    center: {fileID: 682321104}
+    extent: {x: 2, y: 1}
+    prefab: {fileID: 0}
+    speed: 0
+    gravity: 0
 --- !u!1 &3085752317617128034
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,12 +380,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5937205508815992887, guid: 46806bd29a5a8eb468fdd13b49c797c1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.59765625
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937205508815992887, guid: 46806bd29a5a8eb468fdd13b49c797c1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5179687
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937205508815992887, guid: 46806bd29a5a8eb468fdd13b49c797c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.42
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 5937205508815992887, guid: 46806bd29a5a8eb468fdd13b49c797c1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.17
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 5937205508815992887, guid: 46806bd29a5a8eb468fdd13b49c797c1, type: 3}
       propertyPath: m_LocalPosition.z

@@ -17,6 +17,8 @@ public class Wooltooth : MonoBehaviour
 
     public float patrolSpeed;
 
+    public float attackRange;
+
     public float chaseSpeed;
     public BoxCollider2D chaseArea;
     bool chasing;
@@ -28,12 +30,13 @@ public class Wooltooth : MonoBehaviour
     float exitDirection;
 
     Rigidbody2D myRigidbody;
-
+    S_Combat combatScript;
  
 
     // Start is called before the first frame update
     void Start()
     {
+        combatScript = GetComponent<S_Combat>();
         myRigidbody = GetComponent<Rigidbody2D>();
         currentDestination = rightPatrolPoint;
     }
@@ -110,6 +113,13 @@ public class Wooltooth : MonoBehaviour
         }
         else
         {
+            if (Mathf.Abs(chasedPlayer.transform.position.x - transform.position.x) <= attackRange)
+            {
+                combatScript.PerformAttack(0);
+                myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
+                return;
+            }
+
             if (chasedPlayer.transform.position.x > transform.position.x)
             {
                 myRigidbody.velocity = new Vector2(chaseSpeed, myRigidbody.velocity.y);

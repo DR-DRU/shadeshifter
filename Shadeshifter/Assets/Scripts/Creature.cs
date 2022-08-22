@@ -130,7 +130,7 @@ public class Creature : MonoBehaviour
         
         if (squashed)
         {
-            Debug.Log(squashTimer);
+            //Debug.Log(squashTimer);
             squashTimer += Time.deltaTime;
             if (squashTimer >= squashDuration)
             {
@@ -151,7 +151,9 @@ public class Creature : MonoBehaviour
             
         }
 
-
+        myAnimator.SetFloat("Speed", Mathf.Abs(currentSpeed));
+        myAnimator.SetBool("OnGround", isTouchingGround);
+        myAnimator.SetFloat("VerticalMomentum", myRigidbody.velocity.y);
     }
 
     void RevertYScale()
@@ -165,8 +167,7 @@ public class Creature : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, -maxFallSpeed);
         }
-        myAnimator.SetFloat("Speed", Mathf.Abs(currentSpeed));
-        myAnimator.SetBool("OnGround", isTouchingGround);
+
     }
 
     void GroundDetection()
@@ -322,7 +323,7 @@ public class Creature : MonoBehaviour
         hangTimer += Time.deltaTime;
         if (hangTimer >= hangTime)
         {
-            Debug.LogWarning("ey");
+           // Debug.LogWarning("ey");
             hangTimeTriggered = true;
             myRigidbody.gravityScale = downwardsGravityScale;
             return;
@@ -412,6 +413,7 @@ public class Creature : MonoBehaviour
         myRigidbody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
 
         jumped = true;
+        myAnimator.SetTrigger("Jumping");
 
         transform.localScale = new Vector2(transform.localScale.x, stretchFactor);
         stretchTimer = 0;
@@ -461,5 +463,13 @@ public class Creature : MonoBehaviour
         }
 
         return newDirection;
+    }
+
+    private void OnDestroy()
+    {
+        if (Gamepad.current != null)
+        {
+            Gamepad.current.ResetHaptics();
+        }
     }
 }

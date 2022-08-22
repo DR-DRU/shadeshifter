@@ -61,4 +61,6 @@ public class PlayerInput : MonoBehaviour
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         jump = jump || Input.GetButtonDown("Jump");
     }
+
+
 }
