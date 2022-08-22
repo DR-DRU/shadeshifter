@@ -37,7 +37,6 @@ public class S_Combat : MonoBehaviour
         attackTimers = new float[attacks.Length];
         Debug.Log(attackTimers.Length);
 
-        StartCoroutine(testAttack());
     }
 
     void Update()

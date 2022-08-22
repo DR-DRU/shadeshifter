@@ -13,10 +13,12 @@ GameObject:
   - component: {fileID: 4180567577920559765}
   - component: {fileID: 4180567577920559766}
   - component: {fileID: 4180567577920559770}
+  - component: {fileID: 3178866174366323227}
   - component: {fileID: 9044522607674241160}
   - component: {fileID: 4180567578669615997}
   - component: {fileID: 4180567578669615998}
   - component: {fileID: 4180567578669615972}
+  - component: {fileID: 965025232}
   m_Layer: 9
   m_Name: P_Slate
   m_TagString: Player
@@ -35,7 +37,8 @@ Transform:
   m_LocalPosition: {x: -7.619, y: 1.27, z: 10.013204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8324518330077173890}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,8 +80,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1686805565
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4667d21583169b843b0b94b379fdd08f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -210,6 +213,8 @@ MonoBehaviour:
   jumpBufferDuration: 0.1
   width: 1
   height: 2.77
+  hangTimeAirControl: 1
+  hangTime: 2
   landParticle: {fileID: 2875855374124964735, guid: 0d40e4185e917b34a8bd7f92065d7ede, type: 3}
   stretchFactor: 1
   stretchDuration: 0
@@ -221,6 +226,28 @@ MonoBehaviour:
   landVibrationFrequencyL: 0.4
   landVibrationFrequencyH: 0.4
   landVibrationDuration: 0.15
+--- !u!114 &3178866174366323227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4180567577920559767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045a51b126f4eab449e6590445ef2ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacks:
+  - name: Slate_Melee
+    type: 0
+    damage: 1
+    cooldown: 0.2
+    center: {fileID: 8324518330077173890}
+    extent: {x: 3, y: 2}
+    prefab: {fileID: 0}
+    speed: 0
+    gravity: 0
 --- !u!95 &9044522607674241160
 Animator:
   serializedVersion: 4
@@ -459,3 +486,47 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &965025232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4180567577920559767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045a51b126f4eab449e6590445ef2ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacks: []
+--- !u!1 &7301958702554708291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8324518330077173890}
+  m_Layer: 9
+  m_Name: AttackCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8324518330077173890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7301958702554708291}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.13, y: 0.85, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4180567577920559771}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

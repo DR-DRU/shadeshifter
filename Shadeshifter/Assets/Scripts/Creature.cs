@@ -112,7 +112,7 @@ public class Creature : MonoBehaviour
     void Update()
     {
         //Debug.Log(myRigidbody.gravityScale);
-        Debug.Log(hangTimer);
+        //Debug.Log(hangTimer);
         if (myRigidbody.velocity.y <= 0)
         {
             GroundDetection();
