@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.UI;
 
 public class Creature : MonoBehaviour
 {
@@ -66,6 +67,12 @@ public class Creature : MonoBehaviour
     public float width = 1;
     public float height = 2;
 
+    [Range(0,3)]
+    public float hangTimeAirControl = 1;
+    public float hangTime;
+    float hangTimer;
+    bool hangTimeTriggered = false;
+
     LayerMask groundLayer;
 
     [Header("Game Feel Parameters")]
@@ -104,6 +111,8 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(myRigidbody.gravityScale);
+        Debug.Log(hangTimer);
         if (myRigidbody.velocity.y <= 0)
         {
             GroundDetection();
@@ -190,7 +199,7 @@ public class Creature : MonoBehaviour
 
             isTouchingGround = false;
 
-            myRigidbody.gravityScale = downwardsGravityScale;
+            //myRigidbody.gravityScale = downwardsGravityScale;
         }
             
     }
@@ -267,10 +276,16 @@ public class Creature : MonoBehaviour
 
     void InAirMovement(float horizontalMovement)
     {
-        
+        if (jumped && !hangTimeTriggered && myRigidbody.velocity.y <= 0)
+        {
+            HangTimeMovement(horizontalMovement);
+            return;
+        }
 
 
-        currentSpeed += horizontalMovement * airControl;
+        currentSpeed = (currentSpeed + (maxSpeed * horizontalMovement) * airControl) /(1 + airControl);
+
+        //currentSpeed += horizontalMovement * airControl;
         myRigidbody.velocity = new Vector2(currentSpeed, myRigidbody.velocity.y);
 
         if (Mathf.Abs(currentSpeed) > maxSpeed)
@@ -284,6 +299,11 @@ public class Creature : MonoBehaviour
                 currentSpeed = -maxSpeed;
             }
         }
+        CheckForTurn();
+    }
+
+    void CheckForTurn()
+    {
         if (currentSpeed > 0)
         {
             currentDirection = Direction.right;
@@ -292,8 +312,24 @@ public class Creature : MonoBehaviour
         else
         {
             currentDirection = Direction.left;
-            transform.localScale = new Vector2(-1,transform.localScale.y);
+            transform.localScale = new Vector2(-1, transform.localScale.y);
         }
+    }
+
+    void HangTimeMovement(float horizontalMovement)
+    {
+        myRigidbody.gravityScale = 0;
+        hangTimer += Time.deltaTime;
+        if (hangTimer >= hangTime)
+        {
+            Debug.LogWarning("ey");
+            hangTimeTriggered = true;
+            myRigidbody.gravityScale = downwardsGravityScale;
+            return;
+        }
+        currentSpeed = (currentSpeed + (maxSpeed * horizontalMovement) * hangTimeAirControl) / (1 + hangTimeAirControl);
+        myRigidbody.velocity = new Vector2(currentSpeed, 0);
+        CheckForTurn();
     }
 
     void Accelerate(float horizontalMovement)
@@ -363,6 +399,9 @@ public class Creature : MonoBehaviour
 
     void Jump()
     {
+        hangTimeTriggered = false;
+        hangTimer = 0;
+
         audioSource.PlayOneShot(jumpSound);
 
         currentAirControl = airControl;
