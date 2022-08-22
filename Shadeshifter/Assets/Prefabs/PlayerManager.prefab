@@ -70,17 +70,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6702421728362603873}
     m_Modifications:
-    - target: {fileID: 2305605486867356533, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4180567577920559767, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
       propertyPath: m_Name
       value: P_Slate
-      objectReference: {fileID: 0}
-    - target: {fileID: 4180567577920559770, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
-      propertyPath: hangTime
-      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4180567577920559771, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
       propertyPath: m_RootOrder
@@ -96,7 +88,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4180567577920559771, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.013204
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4180567577920559771, guid: a7b277934699ea94f878716fe98ee07d, type: 3}
       propertyPath: m_LocalRotation.w

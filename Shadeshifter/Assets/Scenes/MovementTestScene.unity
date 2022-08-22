@@ -1583,21 +1583,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6702421729461238624, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
-      propertyPath: m_FlipY
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7424066463183867462, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7424066463183867462, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7424066463183867463, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
-      propertyPath: squashFactor
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
