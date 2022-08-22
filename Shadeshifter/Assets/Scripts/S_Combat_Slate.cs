@@ -29,7 +29,7 @@ public class S_Combat_Slate : S_Combat
             nextAttackStatus = 1;
         }
 
-        myAnimator.SetInteger("AttackStatus", attackStatus);
+        //myAnimator.SetInteger("AttackStatus", attackStatus);
 
         S_CameraManager.Instance.ShakeCamera(0.1f, 0.5f, Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, new Vector3(-1f, -1f, 0f));
 
