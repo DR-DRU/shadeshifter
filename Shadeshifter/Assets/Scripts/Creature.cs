@@ -98,6 +98,7 @@ public class Creature : MonoBehaviour
     public float landVibrationDuration = 0.2f;
     float landVibrationTimer = 200;
 
+    int attackStatus;
 
     // Start is called before the first frame update
     void Start()
@@ -159,6 +160,16 @@ public class Creature : MonoBehaviour
     void RevertYScale()
     {
         transform.localScale = new Vector2(transform.localScale.x, 1);
+    }
+
+    public void OnAttack()
+    {
+        attackStatus++;
+        if (attackStatus > 3)
+        {
+            attackStatus = 1;
+        }
+        myAnimator.SetInteger("AttackStatus", attackStatus);
     }
 
     private void FixedUpdate()
