@@ -162,16 +162,6 @@ public class Creature : MonoBehaviour
         transform.localScale = new Vector2(transform.localScale.x, 1);
     }
 
-    public void OnAttack()
-    {
-        attackStatus++;
-        if (attackStatus > 3)
-        {
-            attackStatus = 1;
-        }
-        myAnimator.SetInteger("AttackStatus", attackStatus);
-    }
-
     private void FixedUpdate()
     {
         if (myRigidbody.velocity.y <= -maxFallSpeed)

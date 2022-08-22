@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4180567577920559764}
   - component: {fileID: 4180567577920559765}
   - component: {fileID: 4180567577920559766}
+  - component: {fileID: 5523806212727370953}
   - component: {fileID: 4180567577920559770}
-  - component: {fileID: 3178866174366323227}
   - component: {fileID: 9044522607674241160}
   - component: {fileID: 4180567578669615997}
   - component: {fileID: 4180567578669615998}
@@ -132,6 +132,28 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.77}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &5523806212727370953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4180567577920559767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85e3b5dcf8996d4e91356bb68099fe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacks:
+  - name: Slate_Melee
+    type: 0
+    damage: 1
+    cooldown: 0.5
+    center: {fileID: 8324518330077173890}
+    extent: {x: 1.94, y: 1.09}
+    prefab: {fileID: 0}
+    speed: 0
+    gravity: 0
 --- !u!114 &4180567577920559770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,28 +249,6 @@ MonoBehaviour:
   landVibrationFrequencyL: 0.4
   landVibrationFrequencyH: 0.4
   landVibrationDuration: 0.15
---- !u!114 &3178866174366323227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4180567577920559767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 045a51b126f4eab449e6590445ef2ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attacks:
-  - name: Slate_Melee
-    type: 0
-    damage: 1
-    cooldown: 0.2
-    center: {fileID: 8324518330077173890}
-    extent: {x: 3, y: 2}
-    prefab: {fileID: 0}
-    speed: 0
-    gravity: 0
 --- !u!95 &9044522607674241160
 Animator:
   serializedVersion: 4

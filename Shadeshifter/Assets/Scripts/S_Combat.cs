@@ -5,9 +5,6 @@ using UnityEngine.Events;
 
 public class S_Combat : MonoBehaviour
 {
-    public UnityEvent attackEvent;
-
-
     [System.Serializable]
     public class Attack
     {
@@ -17,6 +14,10 @@ public class S_Combat : MonoBehaviour
         public float damage;
         public float cooldown;
         public Transform center;
+
+        [Header("Combo/Animation")]
+        public float duration;
+        public float comboTimeframe;
 
         [Header("Melee")]
         public Vector2 extent;
@@ -43,7 +44,7 @@ public class S_Combat : MonoBehaviour
 
     }
 
-    void Update()
+    protected virtual void Update()
     {
         for (int i = 0; i < attackTimers.Length; i++)
         {
@@ -57,7 +58,7 @@ public class S_Combat : MonoBehaviour
         {
             if (!canPerformAttack(attackIndex))
             {
-                Debug.Log("Attack currently on cooldown.");
+                //Debug.Log("Attack currently on cooldown.");
                 return;
             }
             
@@ -76,15 +77,14 @@ public class S_Combat : MonoBehaviour
 
                         if (attackToPerform.center == null)
                         {
-                            Debug.Log("No attack center selected for this attack.");
+                            //Debug.Log("No attack center selected for this attack.");
                             return;
                         }
 
                         Vector2 attackCenter = new Vector2(attackToPerform.center.position.x, attackToPerform.center.position.y);
-                        DrawRectangle2D(attackCenter, attackToPerform.extent, 1f);
-                        S_CameraManager.Instance.ShakeCamera(0.1f, 0.5f, Cinemachine.CinemachineImpulseDefinition.ImpulseShapes.Rumble, new Vector3(-1f, -1f, 0f));
+                        DrawRectangle2D(attackCenter, attackToPerform.extent, 1f);                     
 
-                        attackEvent.Invoke();
+                        OnStartAttack(attackIndex);
 
                         Collider2D[] attackHits = Physics2D.OverlapBoxAll(attackCenter, attackToPerform.extent, 0f, LayerMask.GetMask("HitBoxes"));
 
@@ -92,11 +92,11 @@ public class S_Combat : MonoBehaviour
                         {
                             if (SelfCollision(hit))
                             {
-                                Debug.Log("Hit myself - " + this.gameObject.name);
+                                //Debug.Log("Hit myself - " + this.gameObject.name);
                                 continue;
                             }
-                     
-                            Debug.Log("Hit something: " + hit.transform.parent.name + " (" + gameObject.name + ")");
+
+                            //Debug.Log("Hit something: " + hit.transform.parent.name + " (" + gameObject.name + ")");
 
                             if (hit.transform.GetComponentInParent<S_HealthManager>() != null)
                             {
@@ -109,26 +109,27 @@ public class S_Combat : MonoBehaviour
 
                 case Attack.AttackTypes.Ranged:
                     {
-                        Debug.Log("Perform ranged attack.");
+                        //Debug.Log("Perform ranged attack.");
 
                         if (attackToPerform.prefab == null)
                         {
-                            Debug.Log("No projectile prefab selected for this attack.");
+                            //Debug.Log("No projectile prefab selected for this attack.");
                             return;
                         }
 
                         if (attackToPerform.center == null)
                         {
-                            Debug.Log("No attack center selected for this attack.");
+                            //Debug.Log("No attack center selected for this attack.");
                             return;
                         }
+
+                        OnStartAttack(attackIndex);
 
                         GameObject projectile = Instantiate(attackToPerform.prefab, attackToPerform.center);
 
                         Vector3 direction =  new Vector3(attackToPerform.center.position.x - transform.position.x, 0f, 0f);
 
                         projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.speed, attackToPerform.gravity, direction, this, attackIndex);
-
 
                         break;
                     }
@@ -138,7 +139,7 @@ public class S_Combat : MonoBehaviour
 
         else
         {
-            Debug.Log("This attack does not exist");
+            //Debug.Log("This attack does not exist");
             return;
         }
         
@@ -150,7 +151,7 @@ public class S_Combat : MonoBehaviour
         {
             if (!canPerformAttack(attackIndex))
             {
-                Debug.Log("Attack currently on cooldown.");
+                //Debug.Log("Attack currently on cooldown.");
                 return;
             }
 
@@ -169,12 +170,14 @@ public class S_Combat : MonoBehaviour
 
                         if (attackToPerform.center == null)
                         {
-                            Debug.Log("No attack center selected for this attack.");
+                            //Debug.Log("No attack center selected for this attack.");
                             return;
                         }
 
                         Vector2 attackCenter = new Vector2(attackToPerform.center.position.x, attackToPerform.center.position.y);
                         DrawRectangle2D(attackCenter, attackToPerform.extent, 1f);
+
+                        OnStartAttack(attackIndex);
 
                         Collider2D[] attackHits = Physics2D.OverlapBoxAll(attackCenter, attackToPerform.extent, 0f, LayerMask.GetMask("HitBoxes"));
 
@@ -182,11 +185,11 @@ public class S_Combat : MonoBehaviour
                         {
                             if (SelfCollision(hit))
                             {
-                                Debug.Log("Hit myself - " + this.gameObject.name);
+                                //Debug.Log("Hit myself - " + this.gameObject.name);
                                 continue;
                             }
 
-                            Debug.Log("Hit something: " + hit.transform.parent.name + " (" + gameObject.name + ")");
+                            //Debug.Log("Hit something: " + hit.transform.parent.name + " (" + gameObject.name + ")");
 
                             if (hit.transform.GetComponentInParent<S_HealthManager>() != null)
                             {
@@ -199,11 +202,11 @@ public class S_Combat : MonoBehaviour
 
                 case Attack.AttackTypes.Ranged:
                     {
-                        Debug.Log("Perform ranged attack.");
+                        //Debug.Log("Perform ranged attack.");
 
                         if (attackToPerform.prefab == null)
                         {
-                            Debug.Log("No projectile prefab selected for this attack.");
+                            //Debug.Log("No projectile prefab selected for this attack.");
                             return;
                         }
 
@@ -213,10 +216,11 @@ public class S_Combat : MonoBehaviour
                             return;
                         }
 
+                        OnStartAttack(attackIndex);
+
                         GameObject projectile = Instantiate(attackToPerform.prefab, attackToPerform.center);                
 
                         projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.speed, attackToPerform.gravity, direction, this, attackIndex);
-
 
                         break;
                     }
@@ -230,6 +234,11 @@ public class S_Combat : MonoBehaviour
             return;
         }
 
+    }
+
+    protected virtual void OnStartAttack(int attackIndex)
+    {
+        
     }
 
     public void HitEnemy(S_HealthManager enemyHealth, int attackIndex)
@@ -279,18 +288,6 @@ public class S_Combat : MonoBehaviour
         
         return false;
     }
-
-    IEnumerator testAttack()
-    {
-        
-        while (true)
-        {
-            PerformAttack(0);
-            yield return new WaitForSeconds(2f);
-        }      
-       
-    }
-
 
     private void OnDrawGizmosSelected()
     {
