@@ -109,7 +109,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2.5
+  m_GravityScale: 3
   m_Material: {fileID: 6200000, guid: 06d4d2aecb25ca744884ff0ba94d4d22, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -229,26 +229,26 @@ MonoBehaviour:
     m_RotationOrder: 4
   runningThreshold: 0
   turnSpeed: 0.3
-  jumpForce: 16
-  downwardsGravityScale: 10
-  maxFallSpeed: 30
-  airControl: 0.599
+  jumpForce: 15
+  downwardsGravityScale: 11
+  maxFallSpeed: 25
+  airControl: 0.09
   coyoteDuration: 0.12
   jumpBufferDuration: 0.1
   width: 1
   height: 2.77
-  hangTimeAirControl: 1
-  hangTime: 0.2
+  hangTimeAirControl: 0.3
+  hangTime: 0.1
   landParticle: {fileID: 2875855374124964735, guid: 0d40e4185e917b34a8bd7f92065d7ede, type: 3}
   stretchFactor: 1
   stretchDuration: 0
-  squashFactor: 1
-  squashDuration: 0.2
+  squashFactor: 0.6
+  squashDuration: 0.1
   audioSource: {fileID: 4180567578669615972}
   jumpSound: {fileID: 8300000, guid: 6ee34b7250bc5b14b9286a9dfa28aa8f, type: 3}
   landSound: {fileID: 8300000, guid: bd6a8b805dea840469b8589b042edcdb, type: 3}
-  landVibrationFrequencyL: 0.4
-  landVibrationFrequencyH: 0.4
+  landVibrationFrequencyL: 0.3
+  landVibrationFrequencyH: 0.3
   landVibrationDuration: 0.15
 --- !u!95 &9044522607674241160
 Animator:
