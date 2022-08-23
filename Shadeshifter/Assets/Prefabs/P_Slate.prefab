@@ -128,8 +128,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06950474, y: 0.92831516}
-  m_Size: {x: 0.8455448, y: 1.8532686}
+  m_Offset: {x: 0.05, y: 0.93}
+  m_Size: {x: 0.85, y: 1.85}
   m_Direction: 0
 --- !u!114 &5523806212727370953
 MonoBehaviour:
@@ -235,8 +235,8 @@ MonoBehaviour:
   airControl: 0.09
   coyoteDuration: 0.12
   jumpBufferDuration: 0.1
-  width: 1
-  height: 2.77
+  width: 0.85
+  height: 2.78
   hangTimeAirControl: 0.3
   hangTime: 0.1
   landParticle: {fileID: 2875855374124964735, guid: 0d40e4185e917b34a8bd7f92065d7ede, type: 3}
