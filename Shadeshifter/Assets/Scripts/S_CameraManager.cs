@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class S_CameraManager : MonoBehaviour
@@ -14,6 +15,23 @@ public class S_CameraManager : MonoBehaviour
     private CinemachineBlendDefinition.Style defaultBlendStyle;
 
     public static S_CameraManager Instance { get; private set;}
+
+    private GameObject canvas;
+    private Image fadeImage;
+
+    public AnimationCurve fadeOutCurve;
+    public AnimationCurve fadeInCurve;
+    private FadeTypes currentFade;
+
+    private float startTime;
+    private float endTime;
+
+    enum FadeTypes
+    {
+        NotFading,
+        FadingOut,
+        FadingIn,
+    }
 
     private void Awake()
     {
@@ -34,6 +52,36 @@ public class S_CameraManager : MonoBehaviour
             defaultBlendDuration = cameraBrain.m_DefaultBlend.m_Time;
             defaultBlendStyle = cameraBrain.m_DefaultBlend.m_Style;
         }
+
+        canvas = GetComponentInChildren<Canvas>().gameObject;
+        fadeImage = GetComponentInChildren<Image>();
+
+        canvas.SetActive(false);
+        currentFade = FadeTypes.NotFading;
+    }
+    private void Update()
+    {
+        if (currentFade == FadeTypes.FadingOut)
+        {
+            float p = Mathf.Clamp01((Time.time - startTime) / (endTime - startTime));
+            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, fadeOutCurve.Evaluate(p));
+
+            if (p >= 1f)
+            {
+                EndFade();
+            }
+        }
+
+        else if (currentFade == FadeTypes.FadingIn)
+        {
+            float p = Mathf.Clamp01((Time.time - startTime) / (endTime - startTime));
+            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, fadeInCurve.Evaluate((1f - p)));
+
+            if (p >= 1f)
+            {
+                EndFade();
+            }
+        }
     }
 
     public void ShakeCamera(float force, float duration, CinemachineImpulseDefinition.ImpulseShapes shape, Vector3 direction)
@@ -47,6 +95,50 @@ public class S_CameraManager : MonoBehaviour
 
             impulseSource.GenerateImpulseWithForce(force);
         }       
+    }
+
+    public void FadeOut(float duration)
+    {
+        if (currentFade == FadeTypes.NotFading)
+        {           
+            currentFade = FadeTypes.FadingOut;
+
+            startTime = Time.time;
+            endTime = startTime + duration;
+
+            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 0f);
+            canvas.SetActive(true);
+        }
+    }
+
+    public void FadeIn(float duration)
+    {
+        if (currentFade == FadeTypes.NotFading)
+        {
+            currentFade = FadeTypes.FadingIn;
+
+            startTime = Time.time;
+            endTime = startTime + duration;
+
+            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1f);
+            canvas.SetActive(true);
+        }
+    }
+
+    private void EndFade()
+    {
+        if (currentFade == FadeTypes.FadingOut)
+        {
+            currentFade = FadeTypes.NotFading;
+            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1f);
+        }
+
+        else if (currentFade == FadeTypes.FadingIn)
+        {
+            currentFade = FadeTypes.NotFading;
+            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 0f);
+            canvas.SetActive(false);
+        }
     }
 
     public void RegisterCamera(CinemachineVirtualCamera newCam)

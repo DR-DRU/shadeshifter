@@ -36,7 +36,6 @@ public class S_Secret : MonoBehaviour
             myAnimator.SetTrigger("FadeOut");
         }
     }
-
     public void OnFadeOutOver()
     {
         Destroy(gameObject);
