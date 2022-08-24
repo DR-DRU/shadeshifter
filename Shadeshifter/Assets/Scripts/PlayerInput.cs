@@ -12,10 +12,15 @@ public class PlayerInput : MonoBehaviour
 
     bool attack = false;
 
+    bool fallMode = false;
+
     [SerializeField]
     Creature posessedCreature;
 
     S_Combat combatScript;
+
+    [HideInInspector]
+    public List<S_FallThrough> currentFallthroughs;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +32,6 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
         ReceiveInputs();
-       
     }
 
     private void FixedUpdate()
@@ -49,6 +53,11 @@ public class PlayerInput : MonoBehaviour
         jump = false;
     }
 
+    public bool InFallMode()
+    {
+        return fallMode;
+    }
+
     void GetExecutiveScript()
     {
         posessedCreature = GetComponentInChildren<Creature>();
@@ -60,6 +69,39 @@ public class PlayerInput : MonoBehaviour
         attack = attack || Input.GetButtonDown("Attack");
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         jump = jump || Input.GetButtonDown("Jump");
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            StartJump();
+        }
+
+        fallMode = Input.GetButton("Fall");
+
+        if (Input.GetButtonDown("Fall"))
+        {
+            OnEnterFallMode();
+        }
+    }
+
+    private void OnEnterFallMode()
+    {
+        DisableFallthroughs();
+    }
+
+    private void StartJump()
+    {
+        DisableFallthroughs();
+    }
+
+    private void DisableFallthroughs()
+    {
+        if (currentFallthroughs != null)
+        {
+            foreach (S_FallThrough f in currentFallthroughs)
+            {
+                f.SetPlatformEnabled(false);
+            }
+        }
     }
 
 
