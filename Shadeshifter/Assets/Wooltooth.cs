@@ -115,7 +115,7 @@ public class Wooltooth : MonoBehaviour
         {
             if (Mathf.Abs(chasedPlayer.transform.position.x - transform.position.x) <= attackRange)
             {
-                combatScript.PerformAttack(0);
+                combatScript.PerformAttack(0, DamageSource.Enemy);
                 myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
                 return;
             }

@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  viableDamageSources: 00000000
   giveRewardOnDeath: 1
   healthSprites:
   - health: 2

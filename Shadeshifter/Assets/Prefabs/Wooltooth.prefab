@@ -361,6 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 4
+  viableDamageSources: 00000000
   giveRewardOnDeath: 1
   healthBar: {fileID: 8675881851447873712}
   barVisibleTime: 2

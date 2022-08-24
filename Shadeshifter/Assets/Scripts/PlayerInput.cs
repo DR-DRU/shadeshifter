@@ -43,7 +43,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (attack)
         {
-            combatScript.PerformAttack(0);
+            combatScript.PerformAttack(0, DamageSource.Player);
             attack = false;
         }
 

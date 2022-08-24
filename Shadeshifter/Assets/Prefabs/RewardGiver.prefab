@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 4
+  viableDamageSources: 00000000
   giveRewardOnDeath: 1
 --- !u!114 &2455897557026423958
 MonoBehaviour:
@@ -152,6 +153,8 @@ MonoBehaviour:
     damage: 3
     cooldown: 1
     center: {fileID: 105249883}
+    duration: 0
+    comboTimeframe: 0
     extent: {x: 1.65, y: 0.99}
     prefab: {fileID: 0}
     speed: 0
@@ -161,6 +164,8 @@ MonoBehaviour:
     damage: 3
     cooldown: 1
     center: {fileID: 105249883}
+    duration: 0
+    comboTimeframe: 0
     extent: {x: 1.65, y: 0.99}
     prefab: {fileID: 8754067223444494921, guid: 01a7cab0f5e6d1f43821490bc7c7e80b, type: 3}
     speed: 5

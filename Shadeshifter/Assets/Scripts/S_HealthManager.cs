@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DamageSource 
+{ 
+    Player,
+    Enemy,
+    Object
+}
+
 public class S_HealthManager : MonoBehaviour
 {
     public float maxHealth = 4.0f;
@@ -9,8 +16,10 @@ public class S_HealthManager : MonoBehaviour
 
     private bool isDead;
 
+    public List<DamageSource> viableDamageSources;
+
     public bool giveRewardOnDeath;
-    
+  
     // Start is called before the first frame update
     protected virtual void Awake()
     {
@@ -36,12 +45,20 @@ public class S_HealthManager : MonoBehaviour
         }
     }
 
-    public void DealDamage (float amount)
+    public void DealDamage (float amount, DamageSource source)
     {
         if (amount > 0f)
         {
-            ModifyHealth(-amount);
-            OnReceiveDamage(amount);
+            if (viableDamageSources.Contains(source))
+            {
+                ModifyHealth(-amount);
+                OnReceiveDamage(amount);
+            }
+
+            else
+            {
+                Debug.Log("Entity does not take damage from this source!");
+            }
         }
 
         else

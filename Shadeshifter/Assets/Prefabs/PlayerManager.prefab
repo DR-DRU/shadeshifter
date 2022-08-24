@@ -49,6 +49,7 @@ MonoBehaviour:
   jump: 0
   horizontalMovement: 0
   posessedCreature: {fileID: 0}
+  currentFallthroughs: []
 --- !u!114 &770071347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
+  viableDamageSources: 0100000002000000
   giveRewardOnDeath: 0
 --- !u!1001 &6702421728792892637
 PrefabInstance:

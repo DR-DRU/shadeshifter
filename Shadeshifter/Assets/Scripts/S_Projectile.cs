@@ -11,17 +11,19 @@ public class S_Projectile : MonoBehaviour
     private Vector3 direction;
     private S_Combat combatScript;
     private int attackIndex;
+    private DamageSource attackSource;
 
     private bool initiated = false;
     private Vector3 startPosition;
     private Rigidbody2D rigidBodyRef;
 
-    public void InitializeProjectile(float projectileSpeed, float projectileGravity, Vector3 projectileDirection, S_Combat script, int index)
+    public void InitializeProjectile(float projectileSpeed, float projectileGravity, Vector3 projectileDirection, S_Combat script, int index, DamageSource source)
     {
         speed = projectileSpeed;
         direction = projectileDirection;
         combatScript = script;
         attackIndex = index;
+        attackSource = source;
      
         startPosition = transform.position;
         StartCoroutine(DistanceCheck());
@@ -52,7 +54,7 @@ public class S_Projectile : MonoBehaviour
 
         if (collision.transform.GetComponentInParent<S_HealthManager>() != null)
         {
-            combatScript.HitEnemy(collision.transform.GetComponentInParent<S_HealthManager>(), attackIndex);
+            combatScript.HitEnemy(collision.transform.GetComponentInParent<S_HealthManager>(), attackIndex, attackSource);
         }
 
         Destroy(gameObject);
@@ -72,7 +74,7 @@ public class S_Projectile : MonoBehaviour
 
         if (collision.transform.GetComponentInParent<S_HealthManager>() != null)
         {
-            combatScript.HitEnemy(collision.transform.GetComponentInParent<S_HealthManager>(), attackIndex);
+            combatScript.HitEnemy(collision.transform.GetComponentInParent<S_HealthManager>(), attackIndex, attackSource);
         }
 
         Destroy(gameObject);
