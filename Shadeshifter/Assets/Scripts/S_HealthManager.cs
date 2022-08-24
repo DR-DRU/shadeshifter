@@ -41,12 +41,17 @@ public class S_HealthManager : MonoBehaviour
         if (amount > 0f)
         {
             ModifyHealth(-amount);
+            OnReceiveDamage(amount);
         }
 
         else
         {
             Debug.Log("ERROR: Attempted to deal no or negative damage");
         }
+    }
+    protected virtual void OnReceiveDamage(float amount)
+    {
+
     }
 
     public bool IsDamageLethal (float damage)
@@ -57,6 +62,11 @@ public class S_HealthManager : MonoBehaviour
     public float GetHealth()
     {
         return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
     }
 
     public bool GetIsDead()
