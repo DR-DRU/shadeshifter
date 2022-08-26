@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
+    public static PlayerInput Instance { get; private set; }
+
     [SerializeField]
     bool jump = false;
     [SerializeField]
@@ -12,7 +14,11 @@ public class PlayerInput : MonoBehaviour
 
     bool attack = false;
 
+    bool enterRoom = false;
+
     bool fallMode = false;
+
+    bool inputEnabled;
 
     [SerializeField]
     Creature posessedCreature;
@@ -22,21 +28,42 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector]
     public List<S_FallThrough> currentFallthroughs;
 
+    public S_Room nearbyRoom;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         GetExecutiveScript();
+        inputEnabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ReceiveInputs();
+        if (inputEnabled)
+        {
+            ReceiveInputs();
+        }
+        
+    }
+
+    public GameObject GetPossessedCreature()
+    {
+        return posessedCreature.gameObject;
     }
 
     private void FixedUpdate()
     {
-        SendInputs();
+        if (inputEnabled)
+        {
+            SendInputs();
+        }
+            
     }
 
     void SendInputs()
@@ -47,15 +74,47 @@ public class PlayerInput : MonoBehaviour
             attack = false;
         }
 
+        if (enterRoom)
+        {
+            enterRoom = false;
+            TryEnterRoom();
+        }
+
 
         posessedCreature.ProcessInputs(horizontalMovement, jump);
         horizontalMovement = 0f;
         jump = false;
     }
 
+    void TryEnterRoom()
+    {
+        if (nearbyRoom != null)
+        {
+            nearbyRoom.EnterRoom();
+        }
+    }
+
     public bool InFallMode()
     {
         return fallMode;
+    }
+
+    public bool IsInputEnabled()
+    {
+        return inputEnabled;
+    }
+
+    public void SetInputEnabled(bool enabled)
+    {
+        if (enabled != inputEnabled)
+        {
+            inputEnabled = enabled;
+
+            if (!inputEnabled)
+            {
+                //Stop player movement here
+            }
+        }
     }
 
     void GetExecutiveScript()
@@ -69,6 +128,7 @@ public class PlayerInput : MonoBehaviour
         attack = attack || Input.GetButtonDown("Attack");
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         jump = jump || Input.GetButtonDown("Jump");
+        enterRoom = enterRoom || Input.GetButtonDown("EnterRoom");
 
         if (Input.GetButtonDown("Jump"))
         {
