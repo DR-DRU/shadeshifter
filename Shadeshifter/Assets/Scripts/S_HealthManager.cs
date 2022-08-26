@@ -15,6 +15,7 @@ public class S_HealthManager : MonoBehaviour
     private float currentHealth;
 
     private bool isDead;
+    private bool canTakeDamage;
 
     public List<DamageSource> viableDamageSources;
 
@@ -25,6 +26,7 @@ public class S_HealthManager : MonoBehaviour
     {
         isDead = false;
         currentHealth = maxHealth;
+        canTakeDamage = true;
     }
 
     void Start()
@@ -47,11 +49,16 @@ public class S_HealthManager : MonoBehaviour
 
     public void DealDamage (float amount, DamageSource source)
     {
-        if (amount > 0f)
+        if (amount > 0f && canTakeDamage)
         {
             if (viableDamageSources.Contains(source))
             {
-                ModifyHealth(-amount);
+                
+                if (maxHealth >= 0f)
+                {
+                    ModifyHealth(-amount);
+                }
+
                 OnReceiveDamage(amount);
             }
 
@@ -60,15 +67,15 @@ public class S_HealthManager : MonoBehaviour
                 Debug.Log("Entity does not take damage from this source!");
             }
         }
-
-        else
-        {
-            Debug.Log("ERROR: Attempted to deal no or negative damage");
-        }
     }
     protected virtual void OnReceiveDamage(float amount)
     {
 
+    }
+
+    public void SetTakeDamage (bool value)
+    {
+        canTakeDamage = value;
     }
 
     public bool IsDamageLethal (float damage)
