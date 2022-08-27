@@ -9,6 +9,7 @@ public class S_Lever : MonoBehaviour
     public bool canAlwaysChangeStatus = false;
 
     public float invincibilityTime = 0.5f;
+    public bool manuallyResetInvincibility = false;
 
     public Sprite offSprite;
     public Sprite onSprite;
@@ -59,10 +60,13 @@ public class S_Lever : MonoBehaviour
         UpdateStatusDisplay();
         OnStatusChanged();
 
-        Invoke("ResetTakeDamage", invincibilityTime);
+        if (!manuallyResetInvincibility)
+        {
+            Invoke("ResetTakeDamage", invincibilityTime);
+        }   
     }
 
-    private void ResetTakeDamage()
+    public void ResetTakeDamage()
     {
         healthManager.SetTakeDamage(true);
     }
