@@ -7,6 +7,7 @@ public class S_Elevator : MonoBehaviour
     // Start is called before the first frame update
     private GameObject wallLeft;
     private GameObject wallRight;
+    private GameObject wallTop;
 
     private bool wallsEnabled;
 
@@ -37,6 +38,7 @@ public class S_Elevator : MonoBehaviour
     {
         wallLeft = this.transform.GetChild(0).gameObject;
         wallRight = this.transform.GetChild(1).gameObject;
+        wallTop = this.transform.GetChild(2).gameObject;
 
         currentDirection = Directions.None;
 
@@ -102,6 +104,7 @@ public class S_Elevator : MonoBehaviour
 
         wallLeft.SetActive(enabled);
         wallRight.SetActive(enabled);
+        wallTop.SetActive(enabled);
     }
 
     public void StartElevator(int directionIndex)
@@ -119,7 +122,6 @@ public class S_Elevator : MonoBehaviour
                 currentPosition = Directions.None;
 
                 shouldMove = true;
-
             }
         }
     }

@@ -2832,9 +2832,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6360739367824631575, guid: cc0811dda0713384da809abf6edce425, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360739367824631575, guid: cc0811dda0713384da809abf6edce425, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6360739367824631577, guid: cc0811dda0713384da809abf6edce425, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.21
+      value: 15.77
       objectReference: {fileID: 0}
     - target: {fileID: 6360739367824631578, guid: cc0811dda0713384da809abf6edce425, type: 3}
       propertyPath: currentPosition
