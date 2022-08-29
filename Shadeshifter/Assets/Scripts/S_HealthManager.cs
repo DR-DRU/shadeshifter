@@ -133,7 +133,7 @@ public class S_HealthManager : MonoBehaviour
         //Update health bar here
     }
 
-    protected void OnDeath()
+    protected virtual void OnDeath()
     {
         //What happens if the entity dies?
         if (giveRewardOnDeath)

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6702421728362603873}
   - component: {fileID: 6702421728362603872}
-  - component: {fileID: 770071347}
+  - component: {fileID: 941242992109912591}
   m_Layer: 9
   m_Name: PlayerManager
   m_TagString: Player
@@ -50,7 +50,8 @@ MonoBehaviour:
   horizontalMovement: 0
   posessedCreature: {fileID: 0}
   currentFallthroughs: []
---- !u!114 &770071347
+  nearbyRoom: {fileID: 0}
+--- !u!114 &941242992109912591
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,12 +60,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6702421728362603874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d1f6aab01a57d4d82a9b5c9b90790a, type: 3}
+  m_Script: {fileID: 11500000, guid: c38450a5bbe191a48876e7d73b2162cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
   viableDamageSources: 0100000002000000
   giveRewardOnDeath: 0
+  healthBar: {fileID: 0}
 --- !u!1001 &6702421728792892637
 PrefabInstance:
   m_ObjectHideFlags: 0
