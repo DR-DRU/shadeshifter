@@ -11,6 +11,17 @@ public class S_HealthManager_Player : S_HealthManager
     [SerializeField]
     private float hazardFadeOutDuration = 0.5f;
 
+    private S_Checkpoint latestCheckpoint;
+
+    private PlayerInput input;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        input = GetComponent<PlayerInput>();
+    }
+
     protected override void UpdateHealthVisualization()
     {
         base.UpdateHealthVisualization();
@@ -24,6 +35,11 @@ public class S_HealthManager_Player : S_HealthManager
                 healthBar.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
+    }
+
+    public void RegisterCheckpoint(S_Checkpoint checkpoint)
+    {
+        latestCheckpoint = checkpoint;
     }
 
     protected override void OnDeath()
@@ -44,7 +60,10 @@ public class S_HealthManager_Player : S_HealthManager
 
     private void OnFadeOut()
     {
-        //Reset player location
+        if (latestCheckpoint != null)
+        {
+            input.GetPossessedCreature().transform.position = latestCheckpoint.GetRespawnPoint().transform.position;
+        }       
 
         S_CameraManager.Instance.FadeIn(hazardFadeOutDuration);
         PlayerInput.Instance.SetInputEnabled(true);
