@@ -15,6 +15,8 @@ public class S_HealthManager_Player : S_HealthManager
 
     private PlayerInput input;
 
+    private bool inHazard;
+
     protected override void Awake()
     {
         base.Awake();
@@ -49,24 +51,56 @@ public class S_HealthManager_Player : S_HealthManager
 
     public void EnterHazard(S_Hazard hazard)
     {
+        if (inHazard)
+        {
+            return;
+        }
+
+        inHazard = true;
+        
         DealDamage(hazard.damage, DamageSource.Object);
         
         SetTakeDamage(false);
         PlayerInput.Instance.SetInputEnabled(false);
         S_CameraManager.Instance.FadeOut(hazardFadeOutDuration);
 
-        Invoke("OnFadeOut", hazardFadeOutDuration + 0.1f);
+        Invoke("OnFadeOut", hazardFadeOutDuration);
     }
 
     private void OnFadeOut()
-    {
+    {      
+        Vector3 previousLocation;
+        
         if (latestCheckpoint != null)
         {
-            input.GetPossessedCreature().transform.position = latestCheckpoint.GetRespawnPoint().transform.position;
-        }       
+            previousLocation = input.GetPossessedCreature().transform.position;
 
+            input.GetPossessedCreature().transform.position = latestCheckpoint.GetRespawnPoint().transform.position;
+
+            if (previousLocation.x >= input.GetPossessedCreature().transform.position.x)
+            {
+                input.GetPossessedCreature().transform.localScale = new Vector2(1f, input.GetPossessedCreature().transform.localScale.y);
+            }
+
+            else
+            {
+                input.GetPossessedCreature().transform.localScale = new Vector2(-1f, input.GetPossessedCreature().transform.localScale.y);
+            }
+        }
+
+        S_CameraManager.Instance.ResetCameraPosition();
+
+        Invoke("FadeInAgain", 0.2f);
+        
+    }
+
+    private void FadeInAgain()
+    {
         S_CameraManager.Instance.FadeIn(hazardFadeOutDuration);
+
         PlayerInput.Instance.SetInputEnabled(true);
         SetTakeDamage(true);
+
+        inHazard = false;
     }
 }

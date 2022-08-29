@@ -10,7 +10,7 @@ public class Creature : MonoBehaviour
 {
     Animator myAnimator;
 
-    enum Direction { standing, left, right };
+    public enum Direction { standing, left, right };
     enum MovementStatus { still, accelerating, decelerating, atMax};
 
     [Header("Movement Parameters")]
@@ -33,7 +33,7 @@ public class Creature : MonoBehaviour
     float decelTimer = 0;
 
     
-    Direction currentDirection = Direction.standing;
+    public Direction currentDirection = Direction.standing;
     MovementStatus currentMovementStatus = MovementStatus.still;
 
 

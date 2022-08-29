@@ -6,7 +6,6 @@ using Cinemachine;
 public class S_Room : MonoBehaviour
 {
     public float fadeDuration = 1f;
-    public float cameraCatchupTime = 0.3f;
 
     public Transform spawnPoint;
 
@@ -69,7 +68,7 @@ public class S_Room : MonoBehaviour
             S_CameraManager.Instance.FadeOut(fadeDuration);
             PlayerInput.Instance.nearbyRoom = newRoom;
 
-            Invoke("OnFadeOutComplete", fadeDuration + 0.1f);
+            Invoke("OnFadeOutComplete", fadeDuration);
         }              
     }
 
@@ -82,7 +81,9 @@ public class S_Room : MonoBehaviour
             S_CameraManager.Instance.SwitchToCamera(newCamera, 0f, CinemachineBlendDefinition.Style.Cut);
         }
 
-        Invoke("FadeIn", cameraCatchupTime);
+        S_CameraManager.Instance.ResetCameraPosition();
+
+        Invoke("FadeIn", 0.2f);
     }
 
     void FadeIn()

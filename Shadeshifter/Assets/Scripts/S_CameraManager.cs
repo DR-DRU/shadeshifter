@@ -59,6 +59,7 @@ public class S_CameraManager : MonoBehaviour
         canvas.SetActive(false);
         currentFade = FadeTypes.NotFading;
     }
+
     private void Update()
     {
         if (currentFade == FadeTypes.FadingOut)
@@ -277,6 +278,22 @@ public class S_CameraManager : MonoBehaviour
             SwitchToCamera(foundCam, duration, style);
         }
 
+    }
+
+    public void ResetCameraPosition()
+    {
+        if (currentCam != null)
+        {
+            if (currentCam.Follow != null)
+            {
+                Debug.Log("Had Follow");
+                Transform previousFollow = currentCam.Follow;
+                currentCam.Follow = null;
+
+                currentCam.ForceCameraPosition(new Vector3(previousFollow.transform.position.x, previousFollow.transform.position.y, currentCam.transform.position.z), currentCam.transform.rotation);
+                currentCam.Follow = previousFollow;
+            }
+        }
     }
 
     private void ResetBlend()
