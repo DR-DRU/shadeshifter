@@ -63,6 +63,10 @@ public class PlayerInput : MonoBehaviour
         {
             SendInputs();
         }
+        else
+        {
+            posessedCreature.ProcessInputs();
+        }
             
     }
 

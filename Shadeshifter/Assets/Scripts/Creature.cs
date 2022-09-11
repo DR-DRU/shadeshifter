@@ -245,7 +245,7 @@ public class Creature : MonoBehaviour
     }
 
 
-    public void ProcessInputs(float horizontalMovement, bool jump)
+    public void ProcessInputs(float horizontalMovement = 0, bool jump = false)
     {
         ProcessHorizontalInput(horizontalMovement);
         if(jump)ProcessJumpInput(jump);
