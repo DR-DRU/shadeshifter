@@ -159,6 +159,8 @@ public class Creature : MonoBehaviour
 
     void RevertYScale()
     {
+
+
         transform.localScale = new Vector2(transform.localScale.x, 1);
     }
 
@@ -311,7 +313,7 @@ public class Creature : MonoBehaviour
             currentDirection = Direction.right;
             transform.localScale = new Vector2(1, transform.localScale.y);
         }
-        else
+        else if (currentSpeed<0)
         {
             currentDirection = Direction.left;
             transform.localScale = new Vector2(-1, transform.localScale.y);
