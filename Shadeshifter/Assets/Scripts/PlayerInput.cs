@@ -132,17 +132,18 @@ public class PlayerInput : MonoBehaviour
         attack = attack || Input.GetButtonDown("Attack");
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         jump = jump || Input.GetButtonDown("Jump");
-        enterRoom = enterRoom || Input.GetButtonDown("EnterRoom");
+        enterRoom = enterRoom || Input.GetButtonDown("EnterRoom") || Input.GetAxisRaw("Vertical") > 0;
 
-        if (Input.GetButtonDown("Jump"))
+        if (jump)
         {
             StartJump();
         }
 
-        fallMode = Input.GetButton("Fall");
+        fallMode = fallMode || Input.GetButton("Fall") || Input.GetAxisRaw("Vertical") < 0;
 
-        if (Input.GetButtonDown("Fall"))
+        if (fallMode)
         {
+            fallMode = false;
             OnEnterFallMode();
         }
     }
