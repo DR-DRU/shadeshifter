@@ -28,9 +28,9 @@ public class S_HealthManager_Enemy : S_HealthManager
         }
     }
 
-    protected override void OnReceiveDamage(float amount)
+    protected override void OnReceiveDamage(float amount, GameObject source)
     {
-        base.OnReceiveDamage(amount);
+        base.OnReceiveDamage(amount, source);
 
         CancelInvoke("HideBar");
 

@@ -5,8 +5,9 @@ using UnityEngine;
 public enum DamageSource 
 { 
     Player,
+    Companion,
     Enemy,
-    Object
+    Hazard
 }
 
 public class S_HealthManager : MonoBehaviour
@@ -47,11 +48,11 @@ public class S_HealthManager : MonoBehaviour
         }
     }
 
-    public void DealDamage (float amount, DamageSource source)
+    public void DealDamage (float amount, GameObject source, DamageSource sourceType)
     {
         if (amount > 0f && canTakeDamage)
         {
-            if (viableDamageSources.Contains(source))
+            if (viableDamageSources.Contains(sourceType))
             {
                 
                 if (maxHealth >= 0f)
@@ -59,7 +60,7 @@ public class S_HealthManager : MonoBehaviour
                     ModifyHealth(-amount);
                 }
 
-                OnReceiveDamage(amount);
+                OnReceiveDamage(amount, source);
             }
 
             else
@@ -68,7 +69,7 @@ public class S_HealthManager : MonoBehaviour
             }
         }
     }
-    protected virtual void OnReceiveDamage(float amount)
+    protected virtual void OnReceiveDamage(float amount, GameObject source)
     {
 
     }

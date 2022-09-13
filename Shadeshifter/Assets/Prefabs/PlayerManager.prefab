@@ -64,9 +64,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  viableDamageSources: 0100000002000000
+  viableDamageSources: 0300000002000000
   giveRewardOnDeath: 0
   healthBar: {fileID: 0}
+  hazardFadeOutDuration: 0.5
 --- !u!1001 &6702421728792892637
 PrefabInstance:
   m_ObjectHideFlags: 0

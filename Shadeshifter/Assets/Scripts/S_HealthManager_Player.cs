@@ -58,7 +58,7 @@ public class S_HealthManager_Player : S_HealthManager
 
         inHazard = true;
         
-        DealDamage(hazard.damage, DamageSource.Object);
+        DealDamage(hazard.damage, gameObject, DamageSource.Hazard);
         
         SetTakeDamage(false);
         PlayerInput.Instance.SetInputEnabled(false);

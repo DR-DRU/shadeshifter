@@ -1566,7 +1566,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4638598600801885402, guid: 4787d8c68545dc04b9e74f06fbe20f2e, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4638598600801885402, guid: 4787d8c68545dc04b9e74f06fbe20f2e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3780,6 +3780,10 @@ PrefabInstance:
     - target: {fileID: 941242992109912591, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
       propertyPath: hazardFadeOutDuration
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 941242992109912591, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
+      propertyPath: viableDamageSources.Array.data[2]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6702421728362603872, guid: 4093a2fdb92cf9646babf9c358e81dc0, type: 3}
       propertyPath: m_Enabled

@@ -13,9 +13,9 @@ public class S_HealthManager_Lever : S_HealthManager
         lever = GetComponent<S_Lever>();
     }
 
-    protected override void OnReceiveDamage(float amount)
+    protected override void OnReceiveDamage(float amount, GameObject source)
     {
-        base.OnReceiveDamage(amount);
+        base.OnReceiveDamage(amount, source);
 
         if (lever != null)
         {            

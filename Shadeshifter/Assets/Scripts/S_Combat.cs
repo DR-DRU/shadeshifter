@@ -41,7 +41,6 @@ public class S_Combat : MonoBehaviour
     {
         attackTimers = new float[attacks.Length];
         Debug.Log(attackTimers.Length);
-
     }
 
     protected virtual void Update()
@@ -52,7 +51,7 @@ public class S_Combat : MonoBehaviour
         }
     }
 
-    public void PerformAttack(int attackIndex, DamageSource source)
+    public void PerformAttack(int attackIndex, DamageSource sourceType)
     {
         if (attackIndex < attacks.Length)
         {
@@ -100,7 +99,7 @@ public class S_Combat : MonoBehaviour
 
                             if (hit.transform.GetComponentInParent<S_HealthManager>() != null)
                             {
-                                HitEnemy(hit.transform.GetComponentInParent<S_HealthManager>(), attackIndex, source);
+                                HitEnemy(hit.transform.GetComponentInParent<S_HealthManager>(), attackIndex, sourceType);
                             }
                         }
                         
@@ -129,7 +128,7 @@ public class S_Combat : MonoBehaviour
 
                         Vector3 direction =  new Vector3(attackToPerform.center.position.x - transform.position.x, 0f, 0f);
 
-                        projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.speed, attackToPerform.gravity, direction, this, attackIndex, source);
+                        projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.speed, attackToPerform.gravity, direction, this, attackIndex, sourceType);
 
                         break;
                     }
@@ -145,7 +144,7 @@ public class S_Combat : MonoBehaviour
         
      }
 
-    public void PerformAttack(int attackIndex, DamageSource source, Vector3 direction)
+    public void PerformAttack(int attackIndex, DamageSource sourceType, Vector3 direction)
     {
         if (attackIndex < attacks.Length)
         {
@@ -193,7 +192,7 @@ public class S_Combat : MonoBehaviour
 
                             if (hit.transform.GetComponentInParent<S_HealthManager>() != null)
                             {
-                                HitEnemy(hit.transform.GetComponentInParent<S_HealthManager>(), attackIndex, source);
+                                HitEnemy(hit.transform.GetComponentInParent<S_HealthManager>(), attackIndex, sourceType);
                             }
                         }
 
@@ -220,7 +219,7 @@ public class S_Combat : MonoBehaviour
 
                         GameObject projectile = Instantiate(attackToPerform.prefab, attackToPerform.center);                
 
-                        projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.speed, attackToPerform.gravity, direction, this, attackIndex, source);
+                        projectile.GetComponent<S_Projectile>().InitializeProjectile(attackToPerform.speed, attackToPerform.gravity, direction, this, attackIndex, sourceType);
 
                         break;
                     }
@@ -241,9 +240,9 @@ public class S_Combat : MonoBehaviour
         
     }
 
-    public void HitEnemy(S_HealthManager enemyHealth, int attackIndex, DamageSource source)
+    public void HitEnemy(S_HealthManager enemyHealth, int attackIndex, DamageSource sourceType)
     {
-        enemyHealth.DealDamage(attacks[attackIndex].damage, source);
+        enemyHealth.DealDamage(attacks[attackIndex].damage, gameObject, sourceType);
     }
 
     private bool SelfCollision (Collider2D hit)
