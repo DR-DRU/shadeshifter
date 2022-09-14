@@ -85,12 +85,12 @@ public class S_CameraTransition : MonoBehaviour
         {         
             if (overrideLeaveTransition)
             {
-                S_CameraManager.Instance.SwitchToPreviosCamera(overrideLeaveDuration, overrideLeaveStyle);
+                S_CameraManager.Instance.SwitchToPreviousCamera(overrideLeaveDuration, overrideLeaveStyle);
             }
 
             else
             {
-                S_CameraManager.Instance.SwitchToPreviosCamera();
+                S_CameraManager.Instance.SwitchToPreviousCamera();
             }           
         }
     }

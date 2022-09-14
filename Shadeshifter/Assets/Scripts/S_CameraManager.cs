@@ -240,7 +240,7 @@ public class S_CameraManager : MonoBehaviour
         currentCam = newCam;
     }
 
-    public void SwitchToPreviosCamera()
+    public void SwitchToPreviousCamera()
     {
         CinemachineVirtualCamera foundCam = null;
 
@@ -260,7 +260,7 @@ public class S_CameraManager : MonoBehaviour
 
     }
 
-    public void SwitchToPreviosCamera(float duration, CinemachineBlendDefinition.Style style)
+    public void SwitchToPreviousCamera(float duration, CinemachineBlendDefinition.Style style)
     {
         CinemachineVirtualCamera foundCam = null;
 

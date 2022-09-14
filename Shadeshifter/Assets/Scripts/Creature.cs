@@ -98,7 +98,6 @@ public class Creature : MonoBehaviour
     public float landVibrationDuration = 0.2f;
     float landVibrationTimer = 200;
 
-    int attackStatus;
 
     // Start is called before the first frame update
     void Start()
@@ -112,8 +111,11 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(currentSpeed + " " + currentDirection + " " + currentMovementStatus);
         //Debug.Log(myRigidbody.gravityScale);
         //Debug.Log(hangTimer);
+
+
         if (myRigidbody.velocity.y <= 0)
         {
             GroundDetection();
@@ -247,6 +249,7 @@ public class Creature : MonoBehaviour
 
     public void ProcessInputs(float horizontalMovement = 0, bool jump = false)
     {
+        
         ProcessHorizontalInput(horizontalMovement);
         if(jump)ProcessJumpInput(jump);
     }
@@ -289,20 +292,12 @@ public class Creature : MonoBehaviour
 
         currentSpeed = (currentSpeed + (maxSpeed * horizontalMovement) * airControl) /(1 + airControl);
 
+        currentSpeed = Mathf.Clamp(currentSpeed, -maxSpeed, maxSpeed);
+
         //currentSpeed += horizontalMovement * airControl;
         myRigidbody.velocity = new Vector2(currentSpeed, myRigidbody.velocity.y);
 
-        if (Mathf.Abs(currentSpeed) > maxSpeed)
-        {
-            if (currentSpeed > 0)
-            {
-                currentSpeed = maxSpeed;
-            }
-            else
-            {
-                currentSpeed = -maxSpeed;
-            }
-        }
+
         CheckForTurn();
     }
 

@@ -60,7 +60,7 @@ public class S_Gate : MonoBehaviour
 
         if (cam != null)
         {
-            S_CameraManager.Instance.SwitchToPreviosCamera(camTransitionTime, CinemachineBlendDefinition.Style.EaseOut);
+            S_CameraManager.Instance.SwitchToPreviousCamera(camTransitionTime, CinemachineBlendDefinition.Style.EaseOut);
             Invoke("EnableInput", camTransitionTime * 0.75f);
         }
 
