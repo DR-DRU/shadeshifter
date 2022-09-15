@@ -196,6 +196,7 @@ public class Creature : MonoBehaviour
             if (isTouchingGround == true)
             {
                 coyoteTimer = 0;
+                myRigidbody.gravityScale = downwardsGravityScale;
             }
 
             currentAirControl = airControl;
@@ -241,6 +242,7 @@ public class Creature : MonoBehaviour
         squashTimer = 0;
         squashed = true;
 
+        currentMovementStatus = MovementStatus.accelerating;
 
         Instantiate(landParticle, transform.position - new Vector3(0, 0.88f, 0), transform.rotation);
 
@@ -398,6 +400,8 @@ public class Creature : MonoBehaviour
 
     void Jump()
     {
+        myRigidbody.gravityScale = originalGravityScale;
+
         hangTimeTriggered = false;
         hangTimer = 0;
 
