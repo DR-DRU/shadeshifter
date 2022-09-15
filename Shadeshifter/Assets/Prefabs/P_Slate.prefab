@@ -229,7 +229,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   runningThreshold: 0
   turnSpeed: 0.3
-  jumpForce: 15
+  currentDirection: 0
+  jumpForce: 18
   downwardsGravityScale: 11
   maxFallSpeed: 25
   airControl: 0.09
@@ -238,7 +239,7 @@ MonoBehaviour:
   width: 0.85
   height: 2.78
   hangTimeAirControl: 0.3
-  hangTime: 0.1
+  hangTime: 0.05
   landParticle: {fileID: 2875855374124964735, guid: 0d40e4185e917b34a8bd7f92065d7ede, type: 3}
   stretchFactor: 1
   stretchDuration: 0
