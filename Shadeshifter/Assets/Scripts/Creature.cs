@@ -72,6 +72,7 @@ public class Creature : MonoBehaviour
     public float hangTime;
     float hangTimer;
     bool hangTimeTriggered = false;
+    bool inHangTime = false;
 
     LayerMask groundLayer;
 
@@ -111,7 +112,8 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentSpeed + " " + currentDirection + " " + currentMovementStatus);
+        //Debug.Log(isTouchingGround);
+        // Debug.Log(currentSpeed + " " + currentDirection + " " + currentMovementStatus);
         //Debug.Log(myRigidbody.gravityScale);
         //Debug.Log(hangTimer);
 
@@ -220,7 +222,8 @@ public class Creature : MonoBehaviour
         {
             Gamepad.current.SetMotorSpeeds(landVibrationFrequencyL, landVibrationFrequencyH);
         }
-
+        myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        inHangTime = false;
 
         accelTimer = Mathf.Clamp((Mathf.Abs(currentSpeed) / maxSpeed), 0, 1) * accelerationTime;
 
@@ -285,10 +288,17 @@ public class Creature : MonoBehaviour
 
     void InAirMovement(float horizontalMovement)
     {
-        if (jumped && !hangTimeTriggered && myRigidbody.velocity.y <= 0)
+        Debug.Log(jumped + "  " + hangTimeTriggered);
+        if (jumped && !hangTimeTriggered)
         {
-            HangTimeMovement(horizontalMovement);
-            return;
+            Debug.Log("Bitchpls");
+            if (myRigidbody.velocity.y <= 0 || inHangTime)
+            {
+               // Debug.Log("Hey");
+                HangTimeMovement(horizontalMovement);
+                return;
+            }
+            //Debug.Log("Bitch");
         }
 
 
@@ -319,13 +329,17 @@ public class Creature : MonoBehaviour
 
     void HangTimeMovement(float horizontalMovement)
     {
+        inHangTime = true;
+        myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         myRigidbody.gravityScale = 0;
         hangTimer += Time.deltaTime;
         if (hangTimer >= hangTime)
         {
-           // Debug.LogWarning("ey");
+            // Debug.LogWarning("ey");
+            inHangTime = false;
             hangTimeTriggered = true;
             myRigidbody.gravityScale = downwardsGravityScale;
+            myRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
             return;
         }
         currentSpeed = (currentSpeed + (maxSpeed * horizontalMovement) * hangTimeAirControl) / (1 + hangTimeAirControl);
