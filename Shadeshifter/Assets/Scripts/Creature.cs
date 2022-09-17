@@ -99,8 +99,9 @@ public class Creature : MonoBehaviour
     public float landVibrationDuration = 0.2f;
     float landVibrationTimer = 200;
 
-
+    //DEBUG VARIABLES
     bool small = false;
+    bool flying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -113,8 +114,9 @@ public class Creature : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {Debug.Log(myRigidbody.sharedMaterial.friction);
+    {
 
+        /////////////////////////////DEBUG//////////////////////////////////////////////////
         if (Input.GetButtonDown("ToggleSize"))
         {
             if (maxSpeed == 15)
@@ -136,18 +138,42 @@ public class Creature : MonoBehaviour
             maxSpeed = 7.5f;
             transform.localScale = new Vector2(0.5f, 0.5f);
         }
-       /* if (isTouchingGround)
-        {
-            myRigidbody.sharedMaterial.friction = 50;
-        }
-        else
-        {
-            myRigidbody.sharedMaterial.friction = 0;
-        }*/
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+        /* if (isTouchingGround)
+         {
+             myRigidbody.sharedMaterial.friction = 50;
+         }
+         else
+         {
+             myRigidbody.sharedMaterial.friction = 0;
+         }*/
         //Debug.Log(isTouchingGround);
         // Debug.Log(currentSpeed + " " + currentDirection + " " + currentMovementStatus);
         //Debug.Log(myRigidbody.gravityScale);
         //Debug.Log(hangTimer);
+        if (Input.GetButtonDown("ToggleFlight"))
+        {
+            Debug.Log("yo");
+            flying = !flying;
+            if (flying)
+            {
+                myRigidbody.gravityScale = 0;
+            }
+            else
+            {
+                myRigidbody.gravityScale = originalGravityScale;
+            }
+
+        }
+        
+
+
+
+        if (flying)
+        {
+            return;
+        }
 
 
         if (myRigidbody.velocity.y <= 0)
@@ -202,6 +228,18 @@ public class Creature : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (flying)
+        {
+            myRigidbody.gravityScale = 0;
+            float vertical = Input.GetAxisRaw("Vertical");
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            myRigidbody.velocity = new Vector2(horizontal, vertical) * 15;
+            
+
+
+            return;
+        }
+
         if (myRigidbody.velocity.y <= -maxFallSpeed)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, -maxFallSpeed);
@@ -287,13 +325,19 @@ public class Creature : MonoBehaviour
 
     public void ProcessInputs(float horizontalMovement = 0, bool jump = false)
     {
-        
+        if (flying)
+        {
+            return;
+        }
+
         ProcessHorizontalInput(horizontalMovement);
         if(jump)ProcessJumpInput(jump);
     }
 
     void ProcessHorizontalInput(float horizontalMovement)
     {
+
+
         if (!isTouchingGround)
         {
             InAirMovement(horizontalMovement);

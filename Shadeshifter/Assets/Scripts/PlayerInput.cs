@@ -136,8 +136,8 @@ public class PlayerInput : MonoBehaviour
         attack = attack || Input.GetButtonDown("Attack");
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         jump = jump || Input.GetButtonDown("Jump");
-        toggleSize = toggleSize || Input.GetButtonDown("ToggleSize");
-        toggleFlight = toggleFlight || Input.GetButtonDown("ToggleFlight");
+        //toggleSize = toggleSize || Input.GetButtonDown("ToggleSize");
+        //toggleFlight = toggleFlight || Input.GetButtonDown("ToggleFlight");
         enterRoom = enterRoom || Input.GetButtonDown("EnterRoom") || Input.GetAxisRaw("Vertical") > 0;
 
         if (jump)
