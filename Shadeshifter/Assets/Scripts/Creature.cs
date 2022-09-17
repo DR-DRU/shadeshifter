@@ -100,6 +100,8 @@ public class Creature : MonoBehaviour
     float landVibrationTimer = 200;
 
 
+    bool small = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -112,7 +114,28 @@ public class Creature : MonoBehaviour
     // Update is called once per frame
     void Update()
     {Debug.Log(myRigidbody.sharedMaterial.friction);
-       
+
+        if (Input.GetButtonDown("ToggleSize"))
+        {
+            if (maxSpeed == 15)
+            {
+                small = true;
+                maxSpeed = 7.5f;
+                transform.localScale = new Vector2(0.5f, 0.5f);
+            }
+            else
+            {
+                maxSpeed = 15;
+                transform.localScale = new Vector2(1f, 1f);
+                small = false;
+            }
+        }
+
+        if (small == true)
+        {
+            maxSpeed = 7.5f;
+            transform.localScale = new Vector2(0.5f, 0.5f);
+        }
        /* if (isTouchingGround)
         {
             myRigidbody.sharedMaterial.friction = 50;
