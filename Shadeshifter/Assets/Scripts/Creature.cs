@@ -111,7 +111,16 @@ public class Creature : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {Debug.Log(myRigidbody.sharedMaterial.friction);
+       
+       /* if (isTouchingGround)
+        {
+            myRigidbody.sharedMaterial.friction = 50;
+        }
+        else
+        {
+            myRigidbody.sharedMaterial.friction = 0;
+        }*/
         //Debug.Log(isTouchingGround);
         // Debug.Log(currentSpeed + " " + currentDirection + " " + currentMovementStatus);
         //Debug.Log(myRigidbody.gravityScale);
@@ -197,6 +206,7 @@ public class Creature : MonoBehaviour
         {
             if (isTouchingGround == true)
             {
+                //myRigidbody.sharedMaterial.friction = 0;
                 coyoteTimer = 0;
                 myRigidbody.gravityScale = downwardsGravityScale;
             }
@@ -267,6 +277,8 @@ public class Creature : MonoBehaviour
             return;
         }
 
+
+
         CheckForDirectionalChanges(horizontalMovement);
 
 
@@ -288,17 +300,13 @@ public class Creature : MonoBehaviour
 
     void InAirMovement(float horizontalMovement)
     {
-        Debug.Log(jumped + "  " + hangTimeTriggered);
         if (jumped && !hangTimeTriggered)
         {
-            Debug.Log("Bitchpls");
             if (myRigidbody.velocity.y <= 0 || inHangTime)
             {
-               // Debug.Log("Hey");
                 HangTimeMovement(horizontalMovement);
                 return;
             }
-            //Debug.Log("Bitch");
         }
 
 
@@ -414,6 +422,7 @@ public class Creature : MonoBehaviour
 
     void Jump()
     {
+        //myRigidbody.sharedMaterial.friction = 0;
         myRigidbody.gravityScale = originalGravityScale;
 
         hangTimeTriggered = false;
@@ -450,13 +459,14 @@ public class Creature : MonoBehaviour
             switch (newDirection)
             {
                 case Direction.standing:
-                    
+                   // myRigidbody.sharedMaterial.friction = 50;
                     currentMovementStatus = MovementStatus.decelerating;                    
                     break;
                 case Direction.left:
                 case Direction.right:
                     currentMovementStatus = MovementStatus.accelerating;
                     accelTimer = Mathf.Clamp(accelTimer, 0, accelerationTime) * turnSpeed;
+                    //myRigidbody.sharedMaterial.friction = 0;
                     break;
             }
         }
